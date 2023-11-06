@@ -23,7 +23,7 @@ use PHPUnit\Event\TestSuite\Started as TestSuiteStarted;
 use PHPUnit\Event\TestSuite\TestSuite;
 use PHPUnit\Framework\Constraint;
 use PHPUnit\TextUI\Configuration\Configuration;
-use PHPUnit\Util\Exporter;
+use SebastianBergmann\Exporter\Exporter;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -34,7 +34,6 @@ final class DispatchingEmitter implements Emitter
     private readonly Telemetry\System $system;
     private readonly Telemetry\Snapshot $startSnapshot;
     private Telemetry\Snapshot $previousSnapshot;
-    private bool $exportObjects = false;
 
     public function __construct(Dispatcher $dispatcher, Telemetry\System $system)
     {
@@ -43,16 +42,6 @@ final class DispatchingEmitter implements Emitter
 
         $this->startSnapshot    = $system->snapshot();
         $this->previousSnapshot = $system->snapshot();
-    }
-
-    public function exportObjects(): void
-    {
-        $this->exportObjects = true;
-    }
-
-    public function exportsObjects(): bool
-    {
-        return $this->exportObjects;
     }
 
     /**
@@ -311,20 +300,6 @@ final class DispatchingEmitter implements Emitter
     }
 
     /**
-     * @throws InvalidArgumentException
-     * @throws UnknownEventTypeException
-     */
-    public function testPreparationFailed(Code\Test $test): void
-    {
-        $this->dispatcher->dispatch(
-            new Test\PreparationFailed(
-                $this->telemetryInfo(),
-                $test,
-            ),
-        );
-    }
-
-    /**
      * @psalm-param class-string $testClassName
      *
      * @throws InvalidArgumentException
@@ -480,11 +455,15 @@ final class DispatchingEmitter implements Emitter
      */
     public function testAssertionSucceeded(mixed $value, Constraint\Constraint $constraint, string $message): void
     {
+        if (!$this->hasSubscriberFor(Test\AssertionSucceeded::class)) {
+            return;
+        }
+
         $this->dispatcher->dispatch(
             new Test\AssertionSucceeded(
                 $this->telemetryInfo(),
-                Exporter::export($value, $this->exportObjects),
-                $constraint->toString($this->exportObjects),
+                (new Exporter)->export($value),
+                $constraint->toString(),
                 $constraint->count(),
                 $message,
             ),
@@ -497,11 +476,15 @@ final class DispatchingEmitter implements Emitter
      */
     public function testAssertionFailed(mixed $value, Constraint\Constraint $constraint, string $message): void
     {
+        if (!$this->hasSubscriberFor(Test\AssertionFailed::class)) {
+            return;
+        }
+
         $this->dispatcher->dispatch(
             new Test\AssertionFailed(
                 $this->telemetryInfo(),
-                Exporter::export($value, $this->exportObjects),
-                $constraint->toString($this->exportObjects),
+                (new Exporter)->export($value),
+                $constraint->toString(),
                 $constraint->count(),
                 $message,
             ),
@@ -623,7 +606,7 @@ final class DispatchingEmitter implements Emitter
             new Test\TestProxyCreated(
                 $this->telemetryInfo(),
                 $className,
-                Exporter::export($constructorArguments, $this->exportObjects),
+                (new Exporter)->export($constructorArguments),
             ),
         );
     }
@@ -769,7 +752,7 @@ final class DispatchingEmitter implements Emitter
      * @throws InvalidArgumentException
      * @throws UnknownEventTypeException
      */
-    public function testTriggeredPhpDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
+    public function testTriggeredPhpDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void
     {
         $this->dispatcher->dispatch(
             new Test\PhpDeprecationTriggered(
@@ -779,7 +762,6 @@ final class DispatchingEmitter implements Emitter
                 $file,
                 $line,
                 $suppressed,
-                $ignoredByBaseline,
             ),
         );
     }
@@ -788,7 +770,7 @@ final class DispatchingEmitter implements Emitter
      * @throws InvalidArgumentException
      * @throws UnknownEventTypeException
      */
-    public function testTriggeredDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
+    public function testTriggeredDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void
     {
         $this->dispatcher->dispatch(
             new Test\DeprecationTriggered(
@@ -798,7 +780,6 @@ final class DispatchingEmitter implements Emitter
                 $file,
                 $line,
                 $suppressed,
-                $ignoredByBaseline,
             ),
         );
     }
@@ -825,7 +806,7 @@ final class DispatchingEmitter implements Emitter
      * @throws InvalidArgumentException
      * @throws UnknownEventTypeException
      */
-    public function testTriggeredNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
+    public function testTriggeredNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void
     {
         $this->dispatcher->dispatch(
             new Test\NoticeTriggered(
@@ -835,7 +816,6 @@ final class DispatchingEmitter implements Emitter
                 $file,
                 $line,
                 $suppressed,
-                $ignoredByBaseline,
             ),
         );
     }
@@ -844,7 +824,7 @@ final class DispatchingEmitter implements Emitter
      * @throws InvalidArgumentException
      * @throws UnknownEventTypeException
      */
-    public function testTriggeredPhpNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
+    public function testTriggeredPhpNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void
     {
         $this->dispatcher->dispatch(
             new Test\PhpNoticeTriggered(
@@ -854,7 +834,6 @@ final class DispatchingEmitter implements Emitter
                 $file,
                 $line,
                 $suppressed,
-                $ignoredByBaseline,
             ),
         );
     }
@@ -863,7 +842,7 @@ final class DispatchingEmitter implements Emitter
      * @throws InvalidArgumentException
      * @throws UnknownEventTypeException
      */
-    public function testTriggeredWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
+    public function testTriggeredWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void
     {
         $this->dispatcher->dispatch(
             new Test\WarningTriggered(
@@ -873,7 +852,6 @@ final class DispatchingEmitter implements Emitter
                 $file,
                 $line,
                 $suppressed,
-                $ignoredByBaseline,
             ),
         );
     }
@@ -882,7 +860,7 @@ final class DispatchingEmitter implements Emitter
      * @throws InvalidArgumentException
      * @throws UnknownEventTypeException
      */
-    public function testTriggeredPhpWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void
+    public function testTriggeredPhpWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void
     {
         $this->dispatcher->dispatch(
             new Test\PhpWarningTriggered(
@@ -892,7 +870,6 @@ final class DispatchingEmitter implements Emitter
                 $file,
                 $line,
                 $suppressed,
-                $ignoredByBaseline,
             ),
         );
     }
@@ -1178,5 +1155,17 @@ final class DispatchingEmitter implements Emitter
         $this->previousSnapshot = $current;
 
         return $info;
+    }
+
+    /**
+     * @psalm-param class-string $className
+     */
+    private function hasSubscriberFor(string $className): bool
+    {
+        if (!$this->dispatcher instanceof SubscribableDispatcher) {
+            return true;
+        }
+
+        return $this->dispatcher->hasSubscriberFor($className);
     }
 }

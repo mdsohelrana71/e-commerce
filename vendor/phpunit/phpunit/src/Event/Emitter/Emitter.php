@@ -21,10 +21,6 @@ use PHPUnit\TextUI\Configuration\Configuration;
  */
 interface Emitter
 {
-    public function exportObjects(): void;
-
-    public function exportsObjects(): bool;
-
     public function applicationStarted(): void;
 
     public function testRunnerStarted(): void;
@@ -64,8 +60,6 @@ interface Emitter
     public function testSuiteStarted(TestSuite $testSuite): void;
 
     public function testPreparationStarted(Code\Test $test): void;
-
-    public function testPreparationFailed(Code\Test $test): void;
 
     /**
      * @psalm-param class-string $testClassName
@@ -173,19 +167,19 @@ interface Emitter
 
     public function testTriggeredPhpunitDeprecation(Code\Test $test, string $message): void;
 
-    public function testTriggeredPhpDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void;
+    public function testTriggeredPhpDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void;
 
-    public function testTriggeredDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void;
+    public function testTriggeredDeprecation(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void;
 
     public function testTriggeredError(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void;
 
-    public function testTriggeredNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void;
+    public function testTriggeredNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void;
 
-    public function testTriggeredPhpNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void;
+    public function testTriggeredPhpNotice(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void;
 
-    public function testTriggeredWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void;
+    public function testTriggeredWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void;
 
-    public function testTriggeredPhpWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed, bool $ignoredByBaseline): void;
+    public function testTriggeredPhpWarning(Code\Test $test, string $message, string $file, int $line, bool $suppressed): void;
 
     public function testTriggeredPhpunitError(Code\Test $test, string $message): void;
 

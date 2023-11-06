@@ -290,9 +290,6 @@ final class MetadataCollection implements Countable, IteratorAggregate
         );
     }
 
-    /**
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5513
-     */
     public function isIgnoreClassForCodeCoverage(): self
     {
         return new self(
@@ -303,9 +300,6 @@ final class MetadataCollection implements Countable, IteratorAggregate
         );
     }
 
-    /**
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5513
-     */
     public function isIgnoreMethodForCodeCoverage(): self
     {
         return new self(
@@ -316,9 +310,6 @@ final class MetadataCollection implements Countable, IteratorAggregate
         );
     }
 
-    /**
-     * @deprecated https://github.com/sebastianbergmann/phpunit/issues/5513
-     */
     public function isIgnoreFunctionForCodeCoverage(): self
     {
         return new self(

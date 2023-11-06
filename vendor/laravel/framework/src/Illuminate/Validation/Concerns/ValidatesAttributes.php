@@ -864,10 +864,6 @@ trait ValidatesAttributes
 
         $expected = is_array($value) ? count(array_unique($value)) : 1;
 
-        if ($expected === 0) {
-            return true;
-        }
-
         return $this->getExistCount(
             $connection, $table, $column, $value, $parameters
         ) >= $expected;

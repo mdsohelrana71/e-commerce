@@ -80,7 +80,7 @@ class StartSession
 
         $lockFor = $request->route() && $request->route()->locksFor()
                         ? $request->route()->locksFor()
-                        : $this->manager->defaultRouteBlockLockSeconds();
+                        : 10;
 
         $lock = $this->cache($this->manager->blockDriver())
                     ->lock('session:'.$session->getId(), $lockFor)
@@ -90,7 +90,7 @@ class StartSession
             $lock->block(
                 ! is_null($request->route()->waitsFor())
                         ? $request->route()->waitsFor()
-                        : $this->manager->defaultRouteBlockWaitSeconds()
+                        : 10
             );
 
             return $this->handleStatefulRequest($request, $session, $next);

@@ -37,8 +37,7 @@ function __phpunit_run_isolated_test()
         PHPUnit\Event\Telemetry\HRTime::fromSecondsAndNanoseconds(
             {offsetSeconds},
             {offsetNanoseconds}
-        ),
-        {exportObjects},
+        )
     );
 
     require_once '{filename}';

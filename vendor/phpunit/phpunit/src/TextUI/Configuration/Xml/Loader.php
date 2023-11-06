@@ -230,8 +230,9 @@ final class Loader
         //  - C:/windows
         //  - c:/windows
         if (defined('PHP_WINDOWS_VERSION_BUILD') &&
-            !empty($path) &&
             ($path[0] === '\\' || (strlen($path) >= 3 && preg_match('#^[A-Z]:[/\\\]#i', substr($path, 0, 3))))) {
+            assert(!empty($path));
+
             return $path;
         }
 
@@ -244,7 +245,6 @@ final class Loader
 
     private function source(string $filename, DOMXPath $xpath): Source
     {
-        $baseline                           = null;
         $restrictDeprecations               = false;
         $restrictNotices                    = false;
         $restrictWarnings                   = false;
@@ -259,12 +259,6 @@ final class Loader
         $element = $this->element($xpath, 'source');
 
         if ($element) {
-            $baseline = $this->getStringAttribute($element, 'baseline');
-
-            if ($baseline !== null) {
-                $baseline = $this->toAbsolutePath($filename, $baseline);
-            }
-
             $restrictDeprecations               = $this->getBooleanAttribute($element, 'restrictDeprecations', false);
             $restrictNotices                    = $this->getBooleanAttribute($element, 'restrictNotices', false);
             $restrictWarnings                   = $this->getBooleanAttribute($element, 'restrictWarnings', false);
@@ -278,8 +272,6 @@ final class Loader
         }
 
         return new Source(
-            $baseline,
-            false,
             $this->readFilterDirectories($filename, $xpath, 'source/include/directory'),
             $this->readFilterFiles($filename, $xpath, 'source/include/file'),
             $this->readFilterDirectories($filename, $xpath, 'source/exclude/directory'),

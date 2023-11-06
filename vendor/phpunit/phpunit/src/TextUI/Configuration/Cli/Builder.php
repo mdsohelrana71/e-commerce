@@ -10,10 +10,7 @@
 namespace PHPUnit\TextUI\CliArguments;
 
 use function array_map;
-use function basename;
 use function explode;
-use function getcwd;
-use function is_file;
 use function is_numeric;
 use function sprintf;
 use PHPUnit\Runner\TestSuiteSorter;
@@ -58,9 +55,6 @@ final class Builder
         'enforce-time-limit',
         'exclude-group=',
         'filter=',
-        'generate-baseline=',
-        'use-baseline=',
-        'ignore-baseline',
         'generate-configuration',
         'globals-backup',
         'group=',
@@ -144,6 +138,7 @@ final class Builder
             );
         }
 
+        $argument                          = null;
         $atLeastVersion                    = null;
         $backupGlobals                     = null;
         $backupStaticProperties            = null;
@@ -199,9 +194,6 @@ final class Builder
         $stopOnSkipped                     = null;
         $stopOnWarning                     = null;
         $filter                            = null;
-        $generateBaseline                  = null;
-        $useBaseline                       = null;
-        $ignoreBaseline                    = false;
         $generateConfiguration             = false;
         $migrateConfiguration              = false;
         $groups                            = null;
@@ -240,6 +232,10 @@ final class Builder
         $logEventsVerboseText              = null;
         $printerTeamCity                   = null;
         $printerTestDox                    = null;
+
+        if (isset($options[1][0])) {
+            $argument = $options[1][0];
+        }
 
         foreach ($options[0] as $option) {
             switch ($option[0]) {
@@ -375,29 +371,6 @@ final class Builder
 
                 case '--exclude-testsuite':
                     $excludeTestSuite = $option[1];
-
-                    break;
-
-                case '--generate-baseline':
-                    $generateBaseline = $option[1];
-
-                    if (basename($generateBaseline) === $generateBaseline) {
-                        $generateBaseline = getcwd() . DIRECTORY_SEPARATOR . $generateBaseline;
-                    }
-
-                    break;
-
-                case '--use-baseline':
-                    $useBaseline = $option[1];
-
-                    if (!is_file($useBaseline) && basename($useBaseline) === $useBaseline) {
-                        $useBaseline = getcwd() . DIRECTORY_SEPARATOR . $useBaseline;
-                    }
-
-                    break;
-
-                case '--ignore-baseline':
-                    $ignoreBaseline = true;
 
                     break;
 
@@ -823,7 +796,7 @@ final class Builder
         }
 
         return new Configuration(
-            $options[1],
+            $argument,
             $atLeastVersion,
             $backupGlobals,
             $backupStaticProperties,
@@ -872,9 +845,6 @@ final class Builder
             $stopOnSkipped,
             $stopOnWarning,
             $filter,
-            $generateBaseline,
-            $useBaseline,
-            $ignoreBaseline,
             $generateConfiguration,
             $migrateConfiguration,
             $groups,

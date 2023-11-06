@@ -42,6 +42,6 @@ class DatabaseTransactionsManager extends BaseManager
      */
     public function afterCommitCallbacksShouldBeExecuted($level)
     {
-        return $level === 1;
+        return $level === 2;
     }
 }

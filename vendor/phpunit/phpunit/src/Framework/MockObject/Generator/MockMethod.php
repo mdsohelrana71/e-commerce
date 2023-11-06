@@ -34,15 +34,7 @@ use SebastianBergmann\Type\UnknownType;
 final class MockMethod
 {
     use TemplateLoader;
-
-    /**
-     * @psalm-var class-string
-     */
     private readonly string $className;
-
-    /**
-     * @psalm-var non-empty-string
-     */
     private readonly string $methodName;
     private readonly bool $cloneArguments;
     private readonly string $modifier;
@@ -102,14 +94,10 @@ final class MockMethod
         );
     }
 
-    /**
-     * @param class-string     $className
-     * @param non-empty-string $methodName
-     */
-    public static function fromName(string $className, string $methodName, bool $cloneArguments): self
+    public static function fromName(string $fullClassName, string $methodName, bool $cloneArguments): self
     {
         return new self(
-            $className,
+            $fullClassName,
             $methodName,
             $cloneArguments,
             'public',
@@ -123,11 +111,7 @@ final class MockMethod
         );
     }
 
-    /**
-     * @param class-string     $className
-     * @param non-empty-string $methodName
-     */
-    private function __construct(string $className, string $methodName, bool $cloneArguments, string $modifier, string $argumentsForDeclaration, string $argumentsForCall, Type $returnType, string $reference, bool $callOriginalMethod, bool $static, ?string $deprecation)
+    public function __construct(string $className, string $methodName, bool $cloneArguments, string $modifier, string $argumentsForDeclaration, string $argumentsForCall, Type $returnType, string $reference, bool $callOriginalMethod, bool $static, ?string $deprecation)
     {
         $this->className               = $className;
         $this->methodName              = $methodName;
@@ -142,9 +126,6 @@ final class MockMethod
         $this->deprecation             = $deprecation;
     }
 
-    /**
-     * @psalm-return non-empty-string
-     */
     public function methodName(): string
     {
         return $this->methodName;
@@ -156,24 +137,20 @@ final class MockMethod
     public function generateCode(): string
     {
         if ($this->static) {
-            $templateFile = 'doubled_static_method.tpl';
+            $templateFile = 'mocked_static_method.tpl';
+        } elseif ($this->returnType->isNever() || $this->returnType->isVoid()) {
+            $templateFile = sprintf(
+                '%s_method_never_or_void.tpl',
+                $this->callOriginalMethod ? 'proxied' : 'mocked',
+            );
         } else {
             $templateFile = sprintf(
                 '%s_method.tpl',
-                $this->callOriginalMethod ? 'proxied' : 'doubled',
+                $this->callOriginalMethod ? 'proxied' : 'mocked',
             );
         }
 
-        $deprecation  = $this->deprecation;
-        $returnResult = '';
-
-        if (!$this->returnType->isNever() && !$this->returnType->isVoid()) {
-            $returnResult = <<<'EOT'
-
-
-        return $__phpunit_result;
-EOT;
-        }
+        $deprecation = $this->deprecation;
 
         if (null !== $this->deprecation) {
             $deprecation         = "The {$this->className}::{$this->methodName} method is deprecated ({$this->deprecation}).";
@@ -203,7 +180,6 @@ EOT;
                 'reference'          => $this->reference,
                 'clone_arguments'    => $this->cloneArguments ? 'true' : 'false',
                 'deprecation'        => $deprecation,
-                'return_result'      => $returnResult,
             ],
         );
 
@@ -319,7 +295,6 @@ EOT;
                     -2,
                 ),
             )[1];
-            // @codeCoverageIgnoreStart
         } catch (\ReflectionException $e) {
             throw new ReflectionException(
                 $e->getMessage(),
@@ -327,6 +302,5 @@ EOT;
                 $e,
             );
         }
-        // @codeCoverageIgnoreEnd
     }
 }

@@ -21,8 +21,6 @@ use function restore_error_handler;
 use function set_error_handler;
 use PHPUnit\Event;
 use PHPUnit\Event\Code\NoTestCaseObjectOnCallStackException;
-use PHPUnit\Runner\Baseline\Baseline;
-use PHPUnit\Runner\Baseline\Issue;
 use PHPUnit\Util\ExcludeList;
 
 /**
@@ -31,7 +29,6 @@ use PHPUnit\Util\ExcludeList;
 final class ErrorHandler
 {
     private static ?self $instance = null;
-    private ?Baseline $baseline    = null;
     private bool $enabled          = false;
 
     public static function instance(): self
@@ -50,8 +47,6 @@ final class ErrorHandler
             return false;
         }
 
-        $ignoredByBaseline = $this->ignoredByBaseline($errorFile, $errorLine, $errorString);
-
         switch ($errorNumber) {
             case E_NOTICE:
             case E_STRICT:
@@ -61,7 +56,6 @@ final class ErrorHandler
                     $errorFile,
                     $errorLine,
                     $suppressed,
-                    $ignoredByBaseline,
                 );
 
                 break;
@@ -73,7 +67,6 @@ final class ErrorHandler
                     $errorFile,
                     $errorLine,
                     $suppressed,
-                    $ignoredByBaseline,
                 );
 
                 break;
@@ -85,7 +78,6 @@ final class ErrorHandler
                     $errorFile,
                     $errorLine,
                     $suppressed,
-                    $ignoredByBaseline,
                 );
 
                 break;
@@ -97,7 +89,6 @@ final class ErrorHandler
                     $errorFile,
                     $errorLine,
                     $suppressed,
-                    $ignoredByBaseline,
                 );
 
                 break;
@@ -109,7 +100,6 @@ final class ErrorHandler
                     $errorFile,
                     $errorLine,
                     $suppressed,
-                    $ignoredByBaseline,
                 );
 
                 break;
@@ -121,7 +111,6 @@ final class ErrorHandler
                     $errorFile,
                     $errorLine,
                     $suppressed,
-                    $ignoredByBaseline,
                 );
 
                 break;
@@ -170,24 +159,5 @@ final class ErrorHandler
         restore_error_handler();
 
         $this->enabled = false;
-    }
-
-    public function use(Baseline $baseline): void
-    {
-        $this->baseline = $baseline;
-    }
-
-    /**
-     * @psalm-param non-empty-string $file
-     * @psalm-param positive-int $line
-     * @psalm-param non-empty-string $description
-     */
-    private function ignoredByBaseline(string $file, int $line, string $description): bool
-    {
-        if ($this->baseline === null) {
-            return false;
-        }
-
-        return $this->baseline->has(Issue::from($file, $line, null, $description));
     }
 }

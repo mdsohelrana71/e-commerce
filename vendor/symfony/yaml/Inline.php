@@ -57,10 +57,6 @@ class Inline
      */
     public static function parse(string $value = null, int $flags = 0, array &$references = []): mixed
     {
-        if (null === $value) {
-            return '';
-        }
-
         self::initialize($flags);
 
         $value = trim($value);

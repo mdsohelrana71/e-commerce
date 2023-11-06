@@ -248,7 +248,7 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         );
 
         if ( ! @rename($sourcePath, $destinationPath)) {
-            throw UnableToMoveFile::because(error_get_last()['message'] ?? 'unknown reason', $source, $destination);
+            throw UnableToMoveFile::fromLocationTo($sourcePath, $destinationPath);
         }
     }
 
@@ -263,7 +263,7 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         );
 
         if ( ! @copy($sourcePath, $destinationPath)) {
-            throw UnableToCopyFile::because(error_get_last()['message'] ?? 'unknown', $source, $destination);
+            throw UnableToCopyFile::fromLocationTo($sourcePath, $destinationPath);
         }
     }
 

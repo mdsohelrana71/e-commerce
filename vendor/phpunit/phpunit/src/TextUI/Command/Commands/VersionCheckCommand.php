@@ -16,8 +16,6 @@ use PHPUnit\Runner\Version;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
- *
- * @codeCoverageIgnore
  */
 final class VersionCheckCommand implements Command
 {

@@ -56,12 +56,8 @@ class StreamedResponse extends Response
         return $this;
     }
 
-    public function getCallback(): ?\Closure
+    public function getCallback(): \Closure
     {
-        if (!isset($this->callback)) {
-            return null;
-        }
-
         return ($this->callback)(...);
     }
 
