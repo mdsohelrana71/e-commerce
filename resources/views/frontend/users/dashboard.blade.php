@@ -1,22 +1,18 @@
 @include('frontend.master.header')
-
-    <!-- Start Hero Section -->
-        <div class="hero">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-lg-5">
-                        <div class="intro-excerpt">
-                            <h1>User Dashboard</h1>
-                            <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-                            <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
-                        </div>
+    <div class="user-panel">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt align-middle">
+                        <h1>User Dashboard</h1>
                     </div>
-                    <div class="col-lg-7">
-                        <div class="hero-img-wrap">
-                            <img src="{{ asset('frontend/images/couch.png') }}" class="img-fluid">
-                        </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="hero-img-wrap">
+                        <img style="opacity:0.5" src="{{ asset('frontend/images/couch.png') }}" class="img-fluid">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @include('frontend.master.footer')

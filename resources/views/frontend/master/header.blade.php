@@ -77,23 +77,23 @@
                         <div class="collapse" id="shopSettings">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('dashboard'); }}">Dashboard</a>
+                                    <a class="nav-link" href="{{ route('user.profile'); }}">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
                                     @if(Auth::check())
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <a href="route('logout')"onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item preview-item">
-                                            <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-dark rounded-circle">
-                                                <i class="mdi mdi-logout text-danger"></i>
-                                            </div>
-                                            </div>
-                                            <div class="preview-item-content">
-                                                <p class="preview-subject mb-1">Log out</p>
-                                            </div>
-                                        </a>
-                                    </form>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <a href="route('logout')"onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item preview-item">
+                                                <div class="preview-thumbnail">
+                                                <div class="preview-icon bg-dark rounded-circle">
+                                                    <i class="mdi mdi-logout text-danger"></i>
+                                                </div>
+                                                </div>
+                                                <div class="preview-item-content">
+                                                    <p class="preview-subject mb-1">Log out</p>
+                                                </div>
+                                            </a>
+                                        </form>
                                     @else
                                         <a class="nav-link" href="{{ route('login'); }}">Login</a>
                                     @endif

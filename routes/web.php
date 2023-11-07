@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function (){
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/password-change', [ProfileController::class, 'passwordChange'])->name('password.change');
-    Route::get('/user-profile', [ProfileController::class, 'edit'])->name('user.profile');
+    Route::get('/user-profile', [ProfileController::class, 'userProfile'])->name('user.profile');
 });
 
 Route::middleware('admin.auth')->group(function (){

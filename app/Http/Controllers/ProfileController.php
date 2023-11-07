@@ -65,4 +65,8 @@ class ProfileController extends Controller
     public function shopProfile(){
         return view('/admin/pages/shop_settings/shop_profile');
     }
+
+    public function userProfile(){
+        return view('/frontend/users/dashboard');
+    }
 }
