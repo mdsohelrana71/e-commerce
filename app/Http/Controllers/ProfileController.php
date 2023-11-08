@@ -58,10 +58,6 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function passwordChange(){
-        return view('/admin/pages/user/password_change');
-    }
-
     public function shopProfile(){
         return view('/admin/pages/shop_settings/shop_profile');
     }
