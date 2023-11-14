@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +35,16 @@ Route::middleware('auth')->group(function (){
 });
 
 Route::middleware('admin.auth')->group(function (){
+
+    // shop profile routes
     Route::get('/shop-profile', [ProfileController::class, 'shopProfile'])->name('shop.profile');
+    Route::post('/shop-profile-update', [ProfileController::class, 'shopProfileUpdate'])->name('shop.profile.update');
+
+    // blog routes
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
+    Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
+
+
 });
 
 require __DIR__.'/auth.php';

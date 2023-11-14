@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
+use File;
 
 class ProfileController extends Controller
 {
@@ -60,6 +62,42 @@ class ProfileController extends Controller
 
     public function shopProfile(){
         return view('/admin/pages/shop_settings/shop_profile');
+    }
+
+    public function shopProfileUpdate(Request $request){
+        $path = public_path('admin/images');
+        if($request->shop_name){
+            DB::table('options')->updateOrInsert(
+                ['option_key' => 'shop_name'],
+                ['option_key' => 'shop_name', 'option_value' => $request->shop_name,'option_group'=>'shop-profile']
+            );
+        }
+
+        if ($request->hasFile('logo')) {
+            $logoName = time() . '.' . $request->logo->extension();
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+            $request->file('logo')->move($path, $logoName);
+            DB::table('options')->updateOrInsert(
+                ['option_key' => 'shop_logo'],
+                ['option_key' => 'shop_logo', 'option_value' => $logoName,'option_group'=>'shop-profile']
+            );
+        }
+
+        if ($request->hasFile('favicon')) {
+            $faviconName = time() . '.' . $request->favicon->extension();
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+            $request->file('favicon')->move($path, $faviconName);
+            DB::table('options')->updateOrInsert(
+                ['option_key' => 'shop_favicon'],
+                ['option_key' => 'shop_favicon', 'option_value' => $faviconName,'option_group'=>'shop-profile']
+            );
+        }
+
+        return redirect()->back()->with('message', 'Image uploaded successfully');
     }
 
     public function userProfile(){

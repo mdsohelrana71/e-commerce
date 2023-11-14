@@ -48,7 +48,8 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="submit" class="btn btn-success btn-md mt-3">Save</button>
+            {{-- <button type="submit" class="btn btn-primary btn-md mt-3">Save</button> --}}
+            <x-primary-button class="ml-3">{{ __('Delete Account') }}</x-primary-button>
         </div>
     </form>
 </section>

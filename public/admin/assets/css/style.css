@@ -20846,3 +20846,15 @@ h3{
     font-weight: bold;
 }
 
+.antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.font-sans {
+    font-family: Figtree,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";
+}
+.btn-primary {
+    color: #fff !important;
+    background-color: #0090e7 !important;
+    border-color: #0090e7 !important;
+}

@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="Untree.co">
-  <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+  <link rel="shortcut icon" href="{{ get_image(get_potion('shop_favicon'),'logo') }}">
 
   <meta name="description" content="" />
   <meta name="keywords" content="bootstrap, bootstrap4" />
@@ -44,7 +44,7 @@
     <!-- Start Header/Navigation -->
     <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home'); }}">BD SHOP<span>.</span></a>
+            <a class="navbar-brand" href="{{ route('home'); }}"><img src="{{ get_image(get_potion('shop_logo'),'logo') }}" alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -76,11 +76,11 @@
                         </a>
                         <div class="collapse" id="shopSettings">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.profile'); }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    @if(Auth::check())
+                                @if(Auth::check())
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<?php if(is_admin() == true){echo route('dashboard'); }else{ echo route('user.profile'); } ?>">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <a href="route('logout')"onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item preview-item">
@@ -94,10 +94,12 @@
                                                 </div>
                                             </a>
                                         </form>
-                                    @else
+                                    </li>
+                                @else
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ route('login'); }}">Login</a>
-                                    @endif
-                                </li>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </li>

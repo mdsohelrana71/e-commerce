@@ -87,6 +87,7 @@
   .btn-#{$color} {
     &:not(.btn-light):not(.btn-secondary) {
       color: $white;
+      background: $value;
       &:hover,
       &:focus,
       &:active {
