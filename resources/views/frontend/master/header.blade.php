@@ -16,7 +16,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     {{-- <link href="{{ asset('frontend/css/font-awesome.all.min.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('frontend/css/tiny-slider.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontend/css/style.css ') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
     @php
         use Illuminate\Support\Facades\Route;
         $current_route = Route::current();
@@ -71,14 +71,14 @@
                 </ul>
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                     <li>
-                        <a class="nav-link" data-bs-toggle="collapse" href="#shopSettings" aria-expanded="false" aria-controls="shopSettings">
-                            <img src="{{ asset('frontend/images/user.svg') }}">
-                        </a>
-                        <div class="collapse" id="shopSettings">
-                            <ul class="nav flex-column sub-menu">
+                        <div class="dropdown user-info">
+                            <a class="nav-link text-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ asset('frontend/images/user.svg') }}">
+                            </a>
+                            <ul class="dropdown-menu">
                                 @if(Auth::check())
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?php if(is_admin() == true){echo route('dashboard'); }else{ echo route('user.profile'); } ?>">Dashboard</a>
+                                        <a class="dashboard" href="<?php if(is_admin() == true){echo route('dashboard'); }else{ echo route('user.profile'); } ?>">Dashboard</a>
                                     </li>
                                     <li class="nav-item">
                                         <form method="POST" action="{{ route('logout') }}">
@@ -97,7 +97,7 @@
                                     </li>
                                 @else
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('login'); }}">Login</a>
+                                        <a class="login" href="{{ route('login'); }}">Login</a>
                                     </li>
                                 @endif
                             </ul>

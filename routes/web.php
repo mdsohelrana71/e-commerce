@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function (){
 });
 
 Route::middleware('admin.auth')->group(function (){
+
+    // task routes
+    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 
     // shop profile routes
     Route::get('/shop-profile', [ProfileController::class, 'shopProfile'])->name('shop.profile');

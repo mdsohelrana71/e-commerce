@@ -7,8 +7,8 @@
         }
         .blog-image, .blog-action{
             display: flex;
-            justify-content: center; /* Horizontally center the content */
-            align-items: center; /* Vertically center the content */
+            justify-content: center;
+            align-items: center;
         }
 
     </style>
