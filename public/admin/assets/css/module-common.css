@@ -57,3 +57,7 @@
 .dropdown-item:hover, .dropdown-item:focus{
     color: #fff;
 }
+p, a, span{
+    font-family: initial;
+    font-size: medium;
+}

@@ -77,7 +77,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 @if(Auth::check())
-                                    <li class="nav-item">
+                                    <li class="nav-item preview-item-content dropdown-item">
                                         <a class="dashboard" href="<?php if(is_admin() == true){echo route('dashboard'); }else{ echo route('user.profile'); } ?>">Dashboard</a>
                                     </li>
                                     <li class="nav-item">
@@ -96,7 +96,7 @@
                                         </form>
                                     </li>
                                 @else
-                                    <li class="nav-item">
+                                    <li class="nav-item dropdown-item">
                                         <a class="login" href="{{ route('login'); }}">Login</a>
                                     </li>
                                 @endif

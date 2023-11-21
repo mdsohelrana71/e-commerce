@@ -715,3 +715,6 @@ textarea {
 .user-info, .dropdown-toggle::after {
     content: none;
 }
+a{
+    text-decoration: none;
+}
