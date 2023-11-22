@@ -67,9 +67,9 @@
                 </div>
                 </div>
             </li>
-            <li class="nav-item nav-category">
+            {{-- <li class="nav-item nav-category">
                 <span class="nav-link">Navigation</span>
-            </li>
+            </li> --}}
             <li class="nav-item menu-items">
                 <a class="nav-link" href="{{ route('dashboard') }}">
                 <span class="menu-icon">
@@ -83,7 +83,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-laptop"></i>
                 </span>
-                <span class="menu-title">Blog settings</span>
+                <span class="menu-title">Blogs</span>
                 <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-basic">

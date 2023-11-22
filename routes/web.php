@@ -35,10 +35,14 @@ Route::middleware('auth')->group(function (){
     Route::get('/user-profile', [ProfileController::class, 'userProfile'])->name('user.profile');
 });
 
+// Admin all routes start
+
 Route::middleware('admin.auth')->group(function (){
 
     // task routes
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
+    Route::get('/add-task', [TaskController::class, 'addTask'])->name('add.task');
+    Route::post('/store-task', [TaskController::class, 'storeTask'])->name('store.task');
 
     // shop profile routes
     Route::get('/shop-profile', [ProfileController::class, 'shopProfile'])->name('shop.profile');
@@ -48,7 +52,8 @@ Route::middleware('admin.auth')->group(function (){
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
     Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
 
-
 });
+
+// Admin all routes End
 
 require __DIR__.'/auth.php';

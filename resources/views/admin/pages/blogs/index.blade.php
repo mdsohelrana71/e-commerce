@@ -33,7 +33,7 @@
                             <div class="blog-image col-sm-2 col-md-2 col-lg-2">
                                 <img class="card-img-top" src="{{ get_image(get_potion('shop_logo'),'logo') }}" alt="" style="width: 100px">
                             </div>
-                            <div class="blog-info  col-sm-8 col-md-8 col-lg-8">
+                            <div class="blog-info col-sm-8 col-md-8 col-lg-8">
                                 <h4 class="blog-title">Blog Tite</h4>
                                 <p class="card-text">Some example description.</p>
                             </div>

@@ -1,0 +1,35 @@
+.card-body{
+    background: #1f2939;
+    color: #ececec;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 8px;
+}
+.card-body:hover{
+    background: #293344;
+    color: #ffffff;
+}
+.card-body, .task-action{
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.task-info{
+    color: #e5e5e5;
+}
+.task-number {
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+}
+.task-filter, .task-date, .task-action, .task-title, .dropdown{
+    display: inline-block
+}
+.inprogress-tasks,.to-do-tasks, .mdi{
+    font-size: 20px
+}
+.card-header {
+    padding: 15px 0px 5px 0px;
+}
