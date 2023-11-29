@@ -8,27 +8,33 @@ use App\Models\Tasks;
 class TaskController extends Controller
 {
     public function index(){
-        $tasks = DB::table('tasks')
-                ->orderBy('created_at')
-                ->whereIn('status', [1, 2])
-                ->where('tresh', 0)
-                ->get()
-                ->groupBy('status');
-        
-        return view('/admin/pages/tasks/index')->with('tasks',$tasks);
+        return view('/admin/pages/tasks/index');
     }
 
-    public function addTask(){
+    public function taskAdd(){
         return view('/admin/pages/tasks/add_task');
     }
 
-    public function storeTask(Request $request){
+    public function taskStore(Request $request){
 
         DB::table('tasks')->insert([
             'title'      => $request->title,
             'description'=> $request->description,
             'date'       => $request->date
         ]);
-        return view('/admin/pages/tasks/index');
+        return redirect()->route('tasks');
+    }
+
+    public function taskDestroy(Request $request){
+        $id = (int)$request->id;
+        $type = $request->type;
+        if($type == 'tresh'){
+            // DB::table('tasks')->where('id',$id)->update([
+            //     'tresh' => 1
+            // ]);
+        }else{
+            // DB::table('tasks')->where('id',$id)->delete();
+        }
+        return response()->json(["data" => [$id,$type]], 200);
     }
 }

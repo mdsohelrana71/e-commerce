@@ -33,3 +33,7 @@
 .card-header {
     padding: 15px 0px 5px 0px;
 }
+.tox-tinymce {
+    width: 100% !important;
+    height: 300px !important;
+}
