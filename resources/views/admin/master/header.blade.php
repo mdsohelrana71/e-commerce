@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    {{-- <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> --}}
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ get_image(get_potion('shop_favicon'),'logo') }}">
 </head>

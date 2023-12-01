@@ -1,14 +1,6 @@
 @include('admin.master.header')
     <link rel="stylesheet" href="{{ asset('admin/assets/css/modules-css/tasks.css') }}">
     <!-- partial -->
-    @php
-        $tasks = DB::table('tasks')
-                ->orderBy('created_at')
-                ->whereIn('status', [1, 2])
-                ->where('tresh', 0)
-                ->get()
-                ->groupBy('status');
-    @endphp
     <div class="content-wrapper">
         <div class="row">
             <x-module-container>
@@ -19,7 +11,7 @@
                             <p class="mt-1 text-sm g-color">Our tasks list and add, edit, delete functionality.</p>
                         </div>
                         <div class="col-md-3">
-                            <span id="successMessage" style="display: none;" class="text-danger">
+                            <span id="successMessage" style="display: none;" class="text-success">
                                 <!-- Success message will appear here -->
                             </span>
                         </div>
@@ -38,14 +30,14 @@
                     </div>
                 </header>
                 <div class="inprogress-tasks">
-                    <div class="card-header text-white">
-                        <strong class="">Inprogress:</strong>
-                    </div>
-                    @if(isset($tasks))
+                    @if(isset($tasks[1]))
+                        <div class="card-header text-white">
+                            <strong class="">Inprogress:</strong>
+                        </div>
                         @php
                             $i = 1;
                         @endphp
-                        @foreach ($tasks[2] as $task)
+                        @foreach ($tasks[1] as $task)
                             <div class="card-body mb-1">
                                 <div class="row">
                                     <div class="col-sm-10 col-md-10 col-lg-10 text-start">
@@ -53,9 +45,9 @@
                                         <div class="dropdown">
                                             <button class="btn text-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Inprogress</button>
                                             <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item text-success" href="#">To Do</a></li>
-                                            <li><a class="dropdown-item text-warning" href="#">Inprogress</a></li>
-                                            <li><a class="dropdown-item text-primary" href="#">Done</a></li>
+                                                <li><a class="dropdown-item text-success" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},0)">To Do</a></li>
+                                                <li><a class="dropdown-item text-warning" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},1)">Inprogress</a></li>
+                                                <li><a class="dropdown-item text-primary" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},2)">Done</a></li>
                                             </ul>
                                         </div>
                                         <div class="task-title">
@@ -68,7 +60,7 @@
                                         </div>
                                         <div class="task-action">
                                             <a href="#" class="text-primary" title="Edit"><i class="mdi mdi-table-edit"></i></a>
-                                            <a href="#" class="text-warning" title="Tresh"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="#" class="text-warning" title="Trash"><i class="mdi mdi-delete-forever"></i></a>
                                             <a href="#" class="text-danger" title="Delete"><i class="mdi mdi-delete"></i></a>
                                         </div>
 
@@ -80,14 +72,14 @@
                 </div>
 
                 <div class="to-do-tasks">
-                    <div class="card-header text-white">
-                        <strong>To Do:</strong>
-                    </div>
-                    @if(isset($tasks))
+                    @if(isset($tasks[0]))
+                        <div class="card-header text-white">
+                            <strong>To Do:</strong>
+                        </div>
                         @php
                             $i = 1;
                         @endphp
-                        @foreach ($tasks[1] as $task)
+                        @foreach ($tasks[0] as $task)
                             <div class="card-body mb-1" id="single_{{$task->id}}">
                                 <div class="row">
                                     <div class="col-sm-10 col-md-10 col-lg-10 text-start">
@@ -95,9 +87,9 @@
                                         <div class="dropdown">
                                             <button class="btn text-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">To Do</button>
                                             <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item text-success" href="#">To Do</a></li>
-                                            <li><a class="dropdown-item text-warning" href="#">Inprogress</a></li>
-                                            <li><a class="dropdown-item text-primary" href="#">Done</a></li>
+                                                <li><a class="dropdown-item text-success" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},0)">To Do</a></li>
+                                                <li><a class="dropdown-item text-warning" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},1)">Inprogress</a></li>
+                                                <li><a class="dropdown-item text-primary" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},2)">Done</a></li>
                                             </ul>
                                         </div>
                                         <div class="task-title">
@@ -110,8 +102,8 @@
                                         </div>
                                         <div class="task-action">
                                             <a href="javascript:void(0);" class="text-primary" title="Edit" onclick="taskEdit({{$task->id}})"><i class="mdi mdi-table-edit"></i></a>
-                                            <a href="javascript:void(0);" class="text-warning" title="Tresh" onclick="taskRemove({{$task->id}},'tresh')"><i class="mdi mdi-delete-forever"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" title="Delete" onclick="taskRemove({{$task->id}},'delete')"><i class="mdi mdi-delete"></i></a>
+                                            <a href="javascript:void(0);" class="text-warning" title="Trash" onclick="taskRemove({{$task->id}},0)"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="javascript:void(0);" class="text-danger" title="Delete" onclick="taskRemove({{$task->id}},1)"><i class="mdi mdi-delete"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -123,6 +115,31 @@
         </div>
     </div>
     <script>
+        function taskStatusChange(id,type){
+            $.ajax({
+                type: "POST",
+                url: "<?=route('task.status.change')?>",
+                data: {
+                    id,type,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    var type = data.data[1];
+                    if(type == 0){
+                        $("#successMessage").text('This task move to To Do!').fadeIn();
+                    }else if(type == 1){
+                        $("#successMessage").text('This task move to Inprogress!').fadeIn();
+                    }else{
+                        $("#successMessage").text('This task move to Done!').fadeIn();
+                    }
+                    setTimeout(function () {
+                        $("#successMessage").fadeOut();
+                        location.reload();
+                    }, 1000);
+                },
+            });
+        }
+
         function taskRemove(id,type){
             $.ajax({
                 type: "DELETE",
@@ -134,10 +151,10 @@
                 success: function(data) {
                     var id   = data.data[0];
                     var type = data.data[1];
-                    if(type == 'tresh'){
-                        $("#successMessage").text('Successfully Tresh!').fadeIn();
+                    if(type == 'trash'){
+                        $("#successMessage").text('This task successfully Trash!').fadeIn();
                     }else{
-                        $("#successMessage").text('Successfully Delete!').fadeIn();
+                        $("#successMessage").text('This task successfully Delete!').fadeIn();
                     }
                     setTimeout(function () {
                         $("#successMessage").fadeOut();

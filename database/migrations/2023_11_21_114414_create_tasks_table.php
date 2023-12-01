@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->date('date')->nullable();
             $table->integer('status')->default(1);
-            $table->integer('tresh')->default(0);
+            $table->integer('trash')->default(0);
             $table->timestamps();
         });
     }

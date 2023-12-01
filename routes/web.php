@@ -43,6 +43,7 @@ Route::middleware('admin.auth')->group(function (){
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
     Route::get('/task-add', [TaskController::class, 'taskAdd'])->name('task.add');
     Route::post('/tasks-store', [TaskController::class, 'taskStore'])->name('task.store');
+    Route::post('/tasks-status-change', [TaskController::class, 'taskStatusChange'])->name('task.status.change');
     Route::delete('/tasks-destroy', [TaskController::class, 'taskDestroy'])->name('task.destroy');
 
     // shop profile routes

@@ -8,7 +8,13 @@ use App\Models\Tasks;
 class TaskController extends Controller
 {
     public function index(){
-        return view('/admin/pages/tasks/index');
+        $tasks = DB::table('tasks')
+                ->orderBy('created_at')
+                ->whereIn('status', [0, 1])
+                ->where('trash', 0)
+                ->get()
+                ->groupBy('status');
+        return view('/admin/pages/tasks/index')->with('tasks',$tasks);
     }
 
     public function taskAdd(){
@@ -25,15 +31,34 @@ class TaskController extends Controller
         return redirect()->route('tasks');
     }
 
+    public function taskStatusChange(Request $request){
+        $id = (int)$request->id;
+        $type = (int)$request->type;
+        if($type == 0){
+            DB::table('tasks')->where('id',$id)->update([
+                'status' => 0
+            ]);
+        }elseif($type == 1){
+            DB::table('tasks')->where('id',$id)->update([
+                'status' => 1
+            ]);
+        }elseif($type == 2){
+            DB::table('tasks')->where('id',$id)->update([
+                'status' => 2
+            ]);
+        }
+        return response()->json(["data" => [$id,$type]], 200);
+    }
+
     public function taskDestroy(Request $request){
         $id = (int)$request->id;
-        $type = $request->type;
-        if($type == 'tresh'){
-            // DB::table('tasks')->where('id',$id)->update([
-            //     'tresh' => 1
-            // ]);
+        $type = (int)$request->type;
+        if($type == 0){
+            DB::table('tasks')->where('id',$id)->update([
+                'trash' => 1
+            ]);
         }else{
-            // DB::table('tasks')->where('id',$id)->delete();
+            DB::table('tasks')->where('id',$id)->delete();
         }
         return response()->json(["data" => [$id,$type]], 200);
     }
