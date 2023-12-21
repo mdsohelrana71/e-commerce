@@ -36,6 +36,7 @@
                         </div>
                         @php
                             $i = 1;
+                            $currentDate = date("Y-m-d");
                         @endphp
                         @foreach ($tasks[1] as $task)
                             <div class="card-body mb-1">
@@ -56,12 +57,12 @@
                                     </div>
                                     <div class="col-sm-2 col-md-2 col-lg-2 text-end">
                                         <div class="task-date">
-                                            <span class="card-text mr-5">{{ $task->date}}</span>
+                                            <span class="card-text mr-5 @php if($task->date < $currentDate){ echo 'text-warning';} @endphp">{{ $task->date}}</span>
                                         </div>
                                         <div class="task-action">
-                                            <a href="#" class="text-primary" title="Edit"><i class="mdi mdi-table-edit"></i></a>
-                                            <a href="#" class="text-warning" title="Trash"><i class="mdi mdi-delete-forever"></i></a>
-                                            <a href="#" class="text-danger" title="Delete"><i class="mdi mdi-delete"></i></a>
+                                            {{-- <a href="#" class="text-primary" title="Edit"><i class="mdi mdi-table-edit"></i></a> --}}
+                                            <a href="#" class="text-warning" title="Trash" onclick="taskRemove({{$task->id}},0)"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="#" class="text-danger" title="Delete" onclick="taskRemove({{$task->id}},1)"><i class="mdi mdi-delete"></i></a>
                                         </div>
 
                                     </div>
@@ -82,26 +83,29 @@
                         @foreach ($tasks[0] as $task)
                             <div class="card-body mb-1" id="single_{{$task->id}}">
                                 <div class="row">
-                                    <div class="col-sm-10 col-md-10 col-lg-10 text-start">
-                                        <span class="text-white bg-success task-number">{{ $i++ }}</span>
-                                        <div class="dropdown">
-                                            <button class="btn text-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">To Do</button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item text-success" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},0)">To Do</a></li>
-                                                <li><a class="dropdown-item text-warning" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},1)">Inprogress</a></li>
-                                                <li><a class="dropdown-item text-primary" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},2)">Done</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="task-title">
+                                    <div class="col-sm-11 col-md-11 col-lg-11 text-start">
+                                        <span class="task-status">
+                                            <span class="text-white bg-success task-number">{{ $i++ }}</span>
+                                            <div class="dropdown">
+                                                <button class="btn text-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">To Do</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item text-success" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},0)">To Do</a></li>
+                                                    <li><a class="dropdown-item text-warning" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},1)">Inprogress</a></li>
+                                                    <li><a class="dropdown-item text-primary" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},2)">Done</a></li>
+                                                </ul>
+                                            </div>
+                                        </span>
+
+                                        <div class="task-title" id="taskDetails" onclick="taskDetails({{$task->id}})">
                                             <span class="card-text">{{ $task->title}}</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 col-md-2 col-lg-2 text-end">
+                                    <div class="col-sm-1 col-md-1 col-lg-1 text-end">
                                         <div class="task-date">
-                                            <span class="card-text mr-5">{{ $task->date}}</span>
+                                            <span class="card-text mr-5 @php if($task->date < $currentDate){ echo 'text-warning';} @endphp">{{ $task->date}}</span>
                                         </div>
                                         <div class="task-action">
-                                            <a href="javascript:void(0);" class="text-primary" title="Edit" onclick="taskEdit({{$task->id}})"><i class="mdi mdi-table-edit"></i></a>
+                                            {{-- <a href="javascript:void(0);" class="text-primary" title="Edit" onclick="taskEdit({{$task->id}})"><i class="mdi mdi-table-edit"></i></a> --}}
                                             <a href="javascript:void(0);" class="text-warning" title="Trash" onclick="taskRemove({{$task->id}},0)"><i class="mdi mdi-delete-forever"></i></a>
                                             <a href="javascript:void(0);" class="text-danger" title="Delete" onclick="taskRemove({{$task->id}},1)"><i class="mdi mdi-delete"></i></a>
                                         </div>
@@ -114,7 +118,44 @@
             </x-module-container>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                <div class="modal-body">
+                    <div class="card-bodys">
+                        <form action="{{ route('task.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="title">Task Title <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter task title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Task Description</label>
+                                <textarea type="textarea" class="form-control" id="description" name="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Due Date</label>
+                                <input type="date" class="form-control" id="date" name="date" placeholder="Enter due date">
+                            </div>
+                            <button type="submit" class="btn btn-primary me-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+
+        function taskDetails(id){
+            $("#myModal").modal('show');
+        }
         function taskStatusChange(id,type){
             $.ajax({
                 type: "POST",

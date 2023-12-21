@@ -22,7 +22,7 @@
         $current_route = Route::current();
         $current_route = $current_route->getName();
 
-        $home='';$shop='';$blog='';$aboute='';$service='';$contact='';
+        $home = $shop = $blog = $aboute = $service = $contact ='';
         if($current_route == 'home'){
             $home = 'active';
         }elseif($current_route == 'shop') {
