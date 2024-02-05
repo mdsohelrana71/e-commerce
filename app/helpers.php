@@ -47,7 +47,7 @@ function get_image($imageName, $type = null){
     if($type == 'product'){
 
     }elseif($type == 'blog'){
-
+        $image =  asset('storage/blog/images/'.$imageName);
     }elseif($type == 'logo'){
         $image =  asset('admin/images/'.$imageName);
         // if(file_exists($image)){
@@ -55,7 +55,6 @@ function get_image($imageName, $type = null){
         // }else{
         //     return asset('d-logo.png');
         // }
-        return $image;
     }elseif($type == 'user'){
         $image =  asset('admin/images/'.$imageName);
         // if(file_exists($image)){
@@ -63,8 +62,8 @@ function get_image($imageName, $type = null){
         // }else{
         //     return asset('d-user.png');
         // }
-        return $image;
     }
+    return $image;
 }
 
 

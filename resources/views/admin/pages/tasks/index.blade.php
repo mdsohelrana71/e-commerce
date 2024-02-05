@@ -124,7 +124,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="task-title" id="taskTitle">
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                 <div class="modal-body">
@@ -133,7 +134,6 @@
                             @csrf
                             <div class="form-group">
                                 <label for="title">Task Title <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter task title">
                             </div>
                             <div class="form-group">
                                 <label for="description">Task Description</label>
@@ -141,9 +141,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="date">Due Date</label>
-                                <input type="date" class="form-control" id="date" name="date" placeholder="Enter due date">
+                                <input type="date" class="form-control" id="dueDate" name="due-date" placeholder="Enter due date">
                             </div>
-                            <button type="submit" class="btn btn-primary me-2">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -154,7 +153,21 @@
     <script>
 
         function taskDetails(id){
-            $("#myModal").modal('show');
+            $.ajax({
+                type: "GET",
+                url: "<?=route('task.details')?>",
+                data: {
+                    id
+                },
+                success: function(data) {
+                    var data = data.data;
+                    console.log(data);
+                    $("#taskTitle").append(data.title);
+                    $("#description").append(data.title);
+                    $("#dueDate").append(data.date);
+                    $("#myModal").modal('show');
+                },
+            });
         }
         function taskStatusChange(id,type){
             $.ajax({

@@ -31,6 +31,12 @@ class TaskController extends Controller
         return redirect()->route('tasks');
     }
 
+    public function taskDetails(Request $request){
+        $id = (int)$request->id;
+        $data = DB::table('tasks')->where('id',$id)->first();
+        return response()->json(["data" => $data], 200);
+    }
+
     public function taskStatusChange(Request $request){
         $id = (int)$request->id;
         $type = (int)$request->type;

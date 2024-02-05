@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('url');
-            $table->longText('description')->nullable();
+            $table->string('url')->nullable();
+            $table->string('title')->nullable();
             $table->string('image')->nullable();
+            $table->longText('description')->nullable();
+            $table->integer('status')->default(1);
+            $table->integer('trash')->default(0);
             $table->string('meta_key')->nullable();
-            $table->integer('status')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

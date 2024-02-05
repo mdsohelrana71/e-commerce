@@ -43,6 +43,7 @@ Route::middleware('admin.auth')->group(function (){
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
     Route::get('/task-add', [TaskController::class, 'taskAdd'])->name('task.add');
     Route::post('/tasks-store', [TaskController::class, 'taskStore'])->name('task.store');
+    Route::get('/task.details', [TaskController::class, 'taskDetails'])->name('task.details');
     Route::post('/tasks-status-change', [TaskController::class, 'taskStatusChange'])->name('task.status.change');
     Route::delete('/tasks-destroy', [TaskController::class, 'taskDestroy'])->name('task.destroy');
 
@@ -52,6 +53,10 @@ Route::middleware('admin.auth')->group(function (){
 
     // blog routes
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
+    Route::get('/blog-create', [BlogController::class, 'create'])->name('blog.create');
+    Route::post('/blog-store/{id?}', [BlogController::class, 'store'])->name('blog.store');
+    Route::get('/blog-destroy/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
+    Route::get('/blog-edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
     Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
 
 });
