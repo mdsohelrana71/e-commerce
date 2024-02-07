@@ -32,8 +32,9 @@ class BlogController extends Controller
         $data['url'] = Str::slug($request->title);
         $data['title'] = $request->title;
         $data['description'] = $request->description;
+        $data['status'] = $request->status;
         $data['meta_key'] = $request->meta_key;
-
+        
         DB::table('blogs')->updateOrInsert(['id' => $id], $data);
         return redirect()->route('blogs');
     }

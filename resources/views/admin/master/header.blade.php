@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/owl-carousel-2/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/vendors/select2/select2.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     {{-- <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> --}}

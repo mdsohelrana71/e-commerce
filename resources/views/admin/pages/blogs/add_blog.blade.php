@@ -1,9 +1,5 @@
 @include('admin.master.header')
     <style>
-        .card-body{
-            background: #fff;
-            color: #000
-        }
         .blog-image, .blog-action{
             display: flex;
             justify-content: center;
@@ -17,17 +13,6 @@
         .blog-add-form .thumbnail-image{
             margin: 10px 0px 10px 0px;
         }
-
-        /* ck editor */
-
-        .ck-editor__editable[role="textbox"] {
-            min-height: 200px;
-        }
-        .ck-content .image {
-            max-width: 80%;
-            margin: 20px auto;
-        }
-
     </style>
 
     <div class="content-wrapper">
@@ -39,15 +24,6 @@
                             <h2 class="module-title text-gray-900 dark:text-gray-100">Add Blog</h2>
                         </div>
                     </div>
-                    @if($errors->any())
-                        <div>
-                            <ul class="text-danger">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                 </header>
                 @php
                     if (isset($blog)) {
@@ -68,12 +44,28 @@
                             </div>
                             <div class="form-group">
                                 <label for="image">Thumbnail</label>
-                                <img src="{{ isset($blog) ? get_image($blog->image,'blog'):'' }}" alt="" class="thumbnail-image">
+                                @if(isset($blog) && $blog->image)
+                                    <img src="{{ get_image($blog->image,'blog')  }}" alt="" class="thumbnail-image">
+                                @endif
                                 <input type="file" class="form-control" id="image" name="image">
                             </div>
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <textarea type="text" class="form-control" id="description" name="description">{{ isset($blog) ? $blog->description:'' }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Category</label>
+                                <select class="form-select select2" name="status">
+                                    <option value="1">Category one</option>
+                                    <option value="2">Category two</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Status</label>
+                                <select class="form-select" name="status">
+                                    <option value="1">Publish</option>
+                                    <option value="2">Unpublish</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="meta_key">Meta Key</label>

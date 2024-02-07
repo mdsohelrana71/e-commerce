@@ -46,7 +46,7 @@
     color: #00d25b;
 }
 .form-control:focus, .asColorPicker-input:focus, .dataTables_wrapper select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=text], .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=number], .select2-container--default .select2-selection--single:focus, .select2-container--default .select2-selection--single .select2-search__field:focus, .typeahead:focus, .tt-query:focus, .tt-hint:focus{
-    color: #fff
+    color: #2A3038
 }
 .form-control {
     line-height: initial;
@@ -72,5 +72,37 @@ p, a, span, label, button, h1, h2, h3, h4, h5, h6, strong{
 #myModal .modal-dialog .form-control{
     border: 1px solid #e3e3e3;
     background-color: #fff;
+    color: #000;
+}
+
+/* ck editor */
+
+.ck-editor__editable[role="textbox"] {
+    min-height: 200px;
+}
+.ck-content .image {
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+/* end ck editor */
+
+.form-control, .asColorPicker-input, .dataTables_wrapper select, .jsgrid .jsgrid-table .jsgrid-filter-row input[type=text], .jsgrid .jsgrid-table .jsgrid-filter-row select, .jsgrid .jsgrid-table .jsgrid-filter-row input[type=number], .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single .select2-search__field, .typeahead, .tt-query, .tt-hint {
+    border: 1px solid #ccced1;
+    height: calc(2.25rem + 2px);
+    font-weight: normal;
+    font-size: 0.875rem;
+    padding: 0.625rem 0.6875rem;
+    background-color: #ffffff;
+    border-radius: 2px;
+    color: #2A3038;
+}
+.form-control:focus, .asColorPicker-input:focus, .dataTables_wrapper select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=text], .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=number], .select2-container--default .select2-selection--single:focus, .select2-container--default .select2-selection--single .select2-search__field:focus, .typeahead:focus, .tt-query:focus, .tt-hint:focus {
+    border: 1px solid rgba(71, 164, 71, 0.5);
+    background-color: #ffffff;
+}
+
+.card-body {
+    background: #fff;
     color: #000;
 }
