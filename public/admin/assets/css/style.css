@@ -90,7 +90,6 @@
     + SweetAlert
     + Switchery
     + Tags
-    + TinyMCE Editor
     + Toast
     + Typeahead
     + Wysi Editor
@@ -19669,11 +19668,6 @@ div.tagsinput {
     line-height: 1; }
     div.tagsinput span.tag a {
       color: color(white); }
-
-/* TinyMCE Editor */
-.mce-tinymce.mce-panel,
-.mce-tinymce .mce-panel {
-  border-color: #2c2e33; }
 
 /* Toast */
 .jq-toast-wrap .jq-icon-success {

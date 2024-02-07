@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="blog-info col-sm-8 col-md-8 col-lg-8">
                                     <h4 class="blog-title">{{ $data->title }}</h4>
-                                    <p class="card-text">{{ $data->description }}</p>
+                                    <p class="card-text">{!! $data->description !!}</p>
                                 </div>
                                 <div class="blog-action col-sm-2 col-md-2 col-lg-2">
                                     <a href="{{ route('blog.edit',$data->id) }}" class="btn btn-primary m-2">Edit</a>
