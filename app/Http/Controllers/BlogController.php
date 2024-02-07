@@ -28,15 +28,14 @@ class BlogController extends Controller
             $imageName = time().'.'.$image->extension();
             $image->storeAs('public/blog/images', $imageName);
         }
-        $description = $request->input('description');
-
+        
         DB::table('blogs')->updateOrInsert(
             ['id' => $id],
             [
             'url'         => Str::slug($request->title),
             'title'       => $request->title,
             'image'       => $imageName,
-            'description' => $description,
+            'description' => $request->description,
             'meta_key'    => $request->meta_key,
             ]
         );
