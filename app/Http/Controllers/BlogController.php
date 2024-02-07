@@ -22,23 +22,19 @@ class BlogController extends Controller
 
     public function store(Request $request, $id = null){
 
-        $imageName = null;
         if($request->hasFile('image')){
             $image = $request->file('image');
             $imageName = time().'.'.$image->extension();
             $image->storeAs('public/blog/images', $imageName);
+            $data['image'] = $imageName;
         }
-        
-        DB::table('blogs')->updateOrInsert(
-            ['id' => $id],
-            [
-            'url'         => Str::slug($request->title),
-            'title'       => $request->title,
-            'image'       => $imageName,
-            'description' => $request->description,
-            'meta_key'    => $request->meta_key,
-            ]
-        );
+
+        $data['url'] = Str::slug($request->title);
+        $data['title'] = $request->title;
+        $data['description'] = $request->description;
+        $data['meta_key'] = $request->meta_key;
+
+        DB::table('blogs')->updateOrInsert(['id' => $id], $data);
         return redirect()->route('blogs');
     }
 
