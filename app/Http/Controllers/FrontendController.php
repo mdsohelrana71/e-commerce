@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -15,7 +15,11 @@ class FrontendController extends Controller
     }
 
     public function blog(){
-        return view('/frontend/blog');
+        $blogs = DB::table('blogs')
+                ->leftJoin('users','blogs.auth_id','users.id')
+                ->select('blogs.*','users.name')
+                ->paginate(12);
+        return view('/frontend/blog')->with('blogs',$blogs);
     }
 
     public function about(){

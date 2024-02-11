@@ -38,12 +38,13 @@
                                     <img class="card-img-top" src="{{ get_image($data->image,'blog') }}" alt="">
                                 </div>
                                 <div class="blog-info col-sm-8 col-md-8 col-lg-8">
-                                    <h4 class="blog-title">{{ $data->title }}</h4>
-                                    <p class="card-text">{!! $data->description !!}</p>
+                                    <h4 class="blog-title">{{ substr($data->title,0,100) }}</h4>
+                                    <p class="card-text">{!! substr(strip_tags($data->description), 0, 250) . '...'; !!}</p>
                                 </div>
                                 <div class="blog-action col-sm-2 col-md-2 col-lg-2">
                                     <a href="{{ route('blog.edit',$data->id) }}" class="btn btn-primary m-2">Edit</a>
-                                    <a href="{{ route('blog.destroy',$data->id) }}" class="btn btn-danger">Delete</a>
+                                    <a href="{{ route('blog.destroy',$data->id) }}" class="btn btn-danger m-2">Delete</a>
+                                    <a href="{{ route('blog.details',$data->url) }}" class="btn btn-info" target="_blank">View</a>
                                 </div>
                             </div>
                         </div>

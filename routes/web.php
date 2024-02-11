@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('blog');
+Route::get('/blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog.details');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/service', [FrontendController::class, 'service'])->name('service');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');

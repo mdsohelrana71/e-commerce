@@ -59,7 +59,6 @@
 }
 p, a, span, label, button, h1, h2, h3, h4, h5, h6, strong{
     font-family: initial;
-    font-size: medium;
 }
 #myModal .modal-content {
     background-color: #e3e3e3;

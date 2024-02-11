@@ -37,7 +37,7 @@
             $contact = 'active';
         }
     @endphp
-    <title>{{ ucfirst($current_route); }}</title>
+    <title>{{ ucfirst(Request::segment(count(Request::segments()))); }}</title>
 </head>
 
 <body>

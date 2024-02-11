@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class BlogController extends Controller
@@ -21,7 +22,6 @@ class BlogController extends Controller
     }
 
     public function store(Request $request, $id = null){
-
         if($request->hasFile('image')){
             $image = $request->file('image');
             $imageName = time().'.'.$image->extension();
@@ -33,8 +33,9 @@ class BlogController extends Controller
         $data['title'] = $request->title;
         $data['description'] = $request->description;
         $data['status'] = $request->status;
+        $data['auth_id'] = Auth::user()->id;
         $data['meta_key'] = $request->meta_key;
-        
+
         DB::table('blogs')->updateOrInsert(['id' => $id], $data);
         return redirect()->route('blogs');
     }
@@ -47,6 +48,14 @@ class BlogController extends Controller
     public function destroy($id){
         DB::table('blogs')->where('id', $id)->delete();
         return back();
+    }
+
+    public function blogDetails($slug){
+        $blog = DB::table('blogs')->where('url',$slug)
+                ->leftJoin('users','blogs.auth_id','users.id')
+                ->select('blogs.*','users.name')
+                ->first();
+        return view('/admin/pages/blogs/blog_details')->with('blog',$blog);
     }
 
     public function blogSettings(){
