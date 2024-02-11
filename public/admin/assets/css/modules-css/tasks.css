@@ -4,14 +4,15 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 8px;
 }
-.card-body:hover{
+/* .card-body:hover{
     background: #293344;
     color: #ffffff;
-}
+} */
 .card-body, .task-action{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 5px;
 }
 .task-info{
     color: #e5e5e5;
@@ -24,10 +25,10 @@
     display: inline-block;
     text-align: center;
 }
-.task-filter, .task-date, .task-action, .task-title, .dropdown{
+.task-date, .task-action, .task-title{
     display: inline-block
 }
-.inprogress-tasks,.to-do-tasks, .mdi{
+.inprogress-tasks .mdi, .to-do-tasks .mdi{
     font-size: 20px
 }
 .card-header {

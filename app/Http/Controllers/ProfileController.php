@@ -103,4 +103,8 @@ class ProfileController extends Controller
     public function userProfile(){
         return view('/frontend/users/dashboard');
     }
+
+    public function shopIcon(){
+        return view('/admin/pages/icons/icon');
+    }
 }

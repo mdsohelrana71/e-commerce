@@ -51,6 +51,7 @@ Route::middleware('admin.auth')->group(function (){
     // shop profile routes
     Route::get('/shop-profile', [ProfileController::class, 'shopProfile'])->name('shop.profile');
     Route::post('/shop-profile-update', [ProfileController::class, 'shopProfileUpdate'])->name('shop.profile.update');
+    Route::get('/shop-icon', [ProfileController::class, 'shopIcon'])->name('shop.icon');
 
     // blog routes
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');

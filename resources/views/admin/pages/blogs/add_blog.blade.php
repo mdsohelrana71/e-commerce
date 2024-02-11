@@ -14,26 +14,27 @@
             margin: 10px 0px 10px 0px;
         }
     </style>
-
+    @php
+        if (isset($blog)) {
+            $route = 'blog.store';
+            $routeParams = ['id' => $blog->id];
+            $title = 'Edit';
+        } else {
+            $route = 'blog.store';
+            $routeParams = [];
+            $title = 'Add';
+        }
+    @endphp
     <div class="content-wrapper">
         <div class="row">
             <x-module-container>
                 <header>
                     <div class="row">
                         <div class="col-md-8 module-text">
-                            <h2 class="module-title text-gray-900 dark:text-gray-100">Add Blog</h2>
+                            <h2 class="module-title text-gray-900 dark:text-gray-100">Blog {{$title}} </h2>
                         </div>
                     </div>
                 </header>
-                @php
-                    if (isset($blog)) {
-                        $route = 'blog.store';
-                        $routeParams = ['id' => $blog->id];
-                    } else {
-                        $route = 'blog.store';
-                        $routeParams = [];
-                    }
-                @endphp
                 <div class="blog-add-form card">
                     <div class="card-body">
                         <form action="{{ route($route, $routeParams) }}" method="POST" enctype="multipart/form-data">

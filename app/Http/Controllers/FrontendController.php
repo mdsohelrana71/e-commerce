@@ -16,6 +16,9 @@ class FrontendController extends Controller
 
     public function blog(){
         $blogs = DB::table('blogs')
+                ->orderBy('created_at')
+                ->where('status',1)
+                ->where('trash', 0)
                 ->leftJoin('users','blogs.auth_id','users.id')
                 ->select('blogs.*','users.name')
                 ->paginate(12);

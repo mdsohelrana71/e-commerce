@@ -118,7 +118,7 @@
                 </a>
             </li>
             <li class="nav-item menu-items">
-                <a class="nav-link" href="pages/icons/mdi.html">
+                <a class="nav-link" href="{{ route('shop.icon') }}">
                 <span class="menu-icon">
                     <i class="mdi mdi-contacts"></i>
                 </span>

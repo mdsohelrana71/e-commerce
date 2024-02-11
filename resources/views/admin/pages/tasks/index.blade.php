@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-md-6 module-text">
                             <h2 class="module-title text-gray-900 dark:text-gray-100">Tasks List</h2>
-                            <p class="mt-1 text-sm g-color">Our tasks list and add, edit, delete functionality.</p>
+                            <p class="mt-1 text-sm g-color text-green">Our tasks list and add, edit, delete functionality.</p>
                         </div>
                         <div class="col-md-3">
                             <span id="successMessage" style="display: none;" class="text-success">
@@ -16,7 +16,7 @@
                             </span>
                         </div>
                         <div class="col-md-3 task-add text-end">
-                            <div class="dropdown task-filter">
+                            <div class="dropdown filter-dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
                                 <ul class="dropdown-menu">
                                   <li><a class="dropdown-item text-primary" href="#">Done</a></li>
@@ -25,7 +25,7 @@
                                   <li><a class="dropdown-item text-danger" href="#">Trash</a></li>
                                 </ul>
                             </div>
-                            <a href="{{ route('task.add') }}" class="btn btn-success">Add</a>
+                            <a href="{{ route('task.add') }}" class="btn btn-success"><i class="mdi mdi-plus-circle"></i>Add</a>
                         </div>
                     </div>
                 </header>
