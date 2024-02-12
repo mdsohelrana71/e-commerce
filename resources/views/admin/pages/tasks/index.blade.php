@@ -1,6 +1,10 @@
 @include('admin.master.header')
     <link rel="stylesheet" href="{{ asset('admin/assets/css/modules-css/tasks.css') }}">
     <!-- partial -->
+    @php
+        $i = 1;
+        $currentDate = date("Y-m-d");
+    @endphp
     <div class="content-wrapper">
         <div class="row">
             <x-module-container>
@@ -19,10 +23,10 @@
                             <div class="dropdown filter-dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item text-primary" href="#">Done</a></li>
-                                  <li><a class="dropdown-item text-warning" href="#">Inprogress</a></li>
-                                  <li><a class="dropdown-item text-success" href="#">To Do</a></li>
-                                  <li><a class="dropdown-item text-danger" href="#">Trash</a></li>
+                                  <li><a class="dropdown-item text-blue" href="#">Done</a></li>
+                                  <li><a class="dropdown-item text-yellow" href="#">Inprogress</a></li>
+                                  <li><a class="dropdown-item text-green" href="#">To Do</a></li>
+                                  <li><a class="dropdown-item text-read" href="#">Trash</a></li>
                                 </ul>
                             </div>
                             <a href="{{ route('task.add') }}" class="btn btn-success"><i class="mdi mdi-plus-circle"></i>Add</a>
@@ -34,10 +38,6 @@
                         <div class="card-header text-white">
                             <strong class="">Inprogress:</strong>
                         </div>
-                        @php
-                            $i = 1;
-                            $currentDate = date("Y-m-d");
-                        @endphp
                         @foreach ($tasks[1] as $task)
                             <div class="card-body mb-1">
                                 <div class="row">
