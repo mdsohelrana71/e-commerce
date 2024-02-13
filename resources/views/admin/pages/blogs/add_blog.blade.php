@@ -65,7 +65,7 @@
                                 <label for="description">Status</label>
                                 <select class="form-select" name="status">
                                     <option value="1">Publish</option>
-                                    <option value="2">Unpublish</option>
+                                    <option value="0">Unpublish</option>
                                 </select>
                             </div>
                             <div class="form-group">

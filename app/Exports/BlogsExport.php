@@ -19,9 +19,9 @@ class BlogsExport implements FromCollection,WithHeadings
     }
     public function collection()
     {
-        return Blogs::select('title', 'description')->get()->map(function ($blog) {
+        return Blogs::where('status',1)->select('title', 'description')->get()->map(function ($blog) {
             $blog->description = strip_tags($blog->description);
             return $blog;
-        }); 
+        });
     }
 }

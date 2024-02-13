@@ -44,7 +44,9 @@ use Carbon\Carbon;
                         </div>
                     </div>
                 @endforeach
-                {!! $blogs->withQueryString()->links('pagination::bootstrap-5') !!}
+                <div class="pagination">
+                    {!! $blogs->withQueryString()->links('pagination::bootstrap-5') !!}
+                </div>
             </div>
         </div>
     </div>

@@ -106,6 +106,7 @@ p, a, span, label, button, h1, h2, h3, h4, h5, h6, strong{
 .card-body {
     background: #f5f5f5;
     color: #000;
+    border-radius: 5px;
 }
 
 a{

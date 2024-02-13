@@ -39,19 +39,21 @@
                             <strong class="">Inprogress:</strong>
                         </div>
                         @foreach ($tasks[1] as $task)
-                            <div class="card-body mb-1">
+                            <div class="card-body mb-1" id="single_{{$task->id}}">
                                 <div class="row">
                                     <div class="col-sm-10 col-md-10 col-lg-10 text-start">
-                                        <span class="text-white bg-warning task-number">1</span>
-                                        <div class="dropdown">
-                                            <button class="btn text-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Inprogress</button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item text-success" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},0)">To Do</a></li>
-                                                <li><a class="dropdown-item text-warning" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},1)">Inprogress</a></li>
-                                                <li><a class="dropdown-item text-primary" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},2)">Done</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="task-title">
+                                        <span class="task-status">
+                                            <span class="text-white bg-warning task-number">1</span>
+                                            <div class="dropdown">
+                                                <button class="btn text-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Inprogress</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item text-success" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},0)">To Do</a></li>
+                                                    <li><a class="dropdown-item text-warning" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},1)">Inprogress</a></li>
+                                                    <li><a class="dropdown-item text-primary" href="javascript:void(0);" onclick="taskStatusChange({{$task->id}},2)">Done</a></li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                        <div class="task-title" id="taskDetails" onclick="taskDetails({{$task->id}})">
                                             <span class="card-text">{{ $task->title}}</span>
                                         </div>
                                     </div>
@@ -83,7 +85,7 @@
                         @foreach ($tasks[0] as $task)
                             <div class="card-body mb-1" id="single_{{$task->id}}">
                                 <div class="row">
-                                    <div class="col-sm-11 col-md-11 col-lg-11 text-start">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 text-start">
                                         <span class="task-status">
                                             <span class="text-white bg-success task-number">{{ $i++ }}</span>
                                             <div class="dropdown">
@@ -100,7 +102,7 @@
                                             <span class="card-text">{{ $task->title}}</span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-1 col-md-1 col-lg-1 text-end">
+                                    <div class="col-sm-2 col-md-2 col-lg-2 text-end">
                                         <div class="task-date">
                                             <span class="card-text mr-5 @php if($task->date < $currentDate){ echo 'text-warning';} @endphp">{{ $task->date}}</span>
                                         </div>
@@ -120,12 +122,10 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal task-details-modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="task-title" id="taskTitle">
-                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                 <div class="modal-body">
@@ -133,9 +133,9 @@
                         <form action="{{ route('task.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="title">Task Title <span class="text-danger">*</span></label>
+                                <label for="title">Task Title: <span class="task-title-details" id="taskTitle"></span></label>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group task-description">
                                 <label for="description">Task Description</label>
                                 <textarea type="textarea" class="form-control" id="description" name="description"></textarea>
                             </div>
@@ -161,10 +161,11 @@
                 },
                 success: function(data) {
                     var data = data.data;
-                    console.log(data);
-                    $("#taskTitle").append(data.title);
-                    $("#description").append(data.title);
-                    $("#dueDate").append(data.date);
+
+                    // CKEDITOR.instances['description'].setData(data.description);
+                    $("#taskTitle").text(data.title);
+                    $(".task-description .ck-restricted-editing_mode_standard").text(data.description);
+                    $("#dueDate").text(data.date);
                     $("#myModal").modal('show');
                 },
             });

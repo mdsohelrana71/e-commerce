@@ -10,12 +10,14 @@ use App\Exports\BlogsExport;
 
 class BlogController extends Controller
 {
-    public function index(){
-        $blogs = DB::table('blogs')
-                ->orderBy('created_at')
-                ->where('status',1)
-                ->where('trash', 0)
-                ->get();
+    public function index($status = null){
+        $blogs = DB::table('blogs')->orderBy('created_at');
+        if($status !== null){
+            $blogs->where('status',$status);
+        }else{
+            $blogs->where('status',1);
+        }
+        $blogs = $blogs->where('trash', 0)->paginate(5);
         return view('/admin/pages/blogs/index')->with('blogs',$blogs);
     }
 

@@ -21,7 +21,7 @@ class FrontendController extends Controller
                 ->where('trash', 0)
                 ->leftJoin('users','blogs.auth_id','users.id')
                 ->select('blogs.*','users.name')
-                ->paginate(12);
+                ->paginate(6);
         return view('/frontend/blog')->with('blogs',$blogs);
     }
 

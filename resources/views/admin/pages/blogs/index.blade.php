@@ -25,12 +25,19 @@
                             <p class="mt-1 text-sm g-color text-green">Here is a list of all the blogs in our store</p>
                         </div>
                         <div class="col-md-4 blog-add text-end">
-                            <a href="{{ route('blogs.export') }}" class="btn btn-success"><i class="mdi mdi-arrow-down-bold-circle-outline"></i>Blogs Export</a>
+                            <div class="dropdown filter-dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Blogs Export</button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item text-green" href="{{ route('blogs.export') }}}">Excel Download</a></li>
+                                  <li><a class="dropdown-item text-blue" href="{{ route('blogs.export') }}">CSV Download</a></li>
+                                  <li><a class="dropdown-item text-yellow" href="{{ route('blogs.export') }}">PDF Download</a></li>
+                                </ul>
+                            </div>
                             <div class="dropdown filter-dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item text-green" href="#">Publish</a></li>
-                                  <li><a class="dropdown-item text-yellow" href="#">Unpublish</a></li>
+                                  <li><a class="dropdown-item text-green" href="{{ route('blogs','1') }}">Publish</a></li>
+                                  <li><a class="dropdown-item text-yellow" href="{{ route('blogs','0') }}">Unpublish</a></li>
                                 </ul>
                             </div>
                             <a href="{{ route('blog.create') }}" class="btn btn-success"><i class="mdi mdi-plus-circle"></i>Add</a>
@@ -58,6 +65,9 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
+                <div class="data-pagination">
+                    {!! $blogs->withQueryString()->links('pagination::bootstrap-5') !!}
                 </div>
             </x-module-container>
         </div>

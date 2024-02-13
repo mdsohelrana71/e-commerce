@@ -13,6 +13,6 @@ class Blogs extends Model
 
     public function collection()
     {
-        return Student::all();
+        return Blogs::all();
     }
 }
