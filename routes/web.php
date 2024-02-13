@@ -59,6 +59,7 @@ Route::middleware('admin.auth')->group(function (){
     Route::post('/blog-store/{id?}', [BlogController::class, 'store'])->name('blog.store');
     Route::get('/blog-destroy/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
     Route::get('/blog-edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
+    Route::get('/blogs-export', [BlogController::class, 'blogExport'])->name('blogs.export');
     Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
 
 });

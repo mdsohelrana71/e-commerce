@@ -25,6 +25,7 @@
                             <p class="mt-1 text-sm g-color text-green">Here is a list of all the blogs in our store</p>
                         </div>
                         <div class="col-md-4 blog-add text-end">
+                            <a href="{{ route('blogs.export') }}" class="btn btn-success"><i class="mdi mdi-arrow-down-bold-circle-outline"></i>Blogs Export</a>
                             <div class="dropdown filter-dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
                                 <ul class="dropdown-menu">

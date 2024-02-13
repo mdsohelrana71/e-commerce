@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BlogsExport;
 
 class BlogController extends Controller
 {
@@ -56,6 +58,10 @@ class BlogController extends Controller
                 ->select('blogs.*','users.name')
                 ->first();
         return view('/admin/pages/blogs/blog_details')->with('blog',$blog);
+    }
+
+    public function blogExport(){
+        return Excel::download(new BlogsExport, 'blog-list.xlsx');
     }
 
     public function blogSettings(){

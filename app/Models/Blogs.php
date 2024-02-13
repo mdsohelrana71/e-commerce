@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Blogs extends Model
 {
     use HasFactory;
+
+    protected $table = 'blogs';
+
+    public function collection()
+    {
+        return Student::all();
+    }
 }
