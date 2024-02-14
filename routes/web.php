@@ -60,6 +60,7 @@ Route::middleware('admin.auth')->group(function (){
     Route::get('/blog-destroy/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
     Route::get('/blog-edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
     Route::get('/blogs-export', [BlogController::class, 'blogExport'])->name('blogs.export');
+    Route::get('/blogs-search', [BlogController::class, 'blogSearch'])->name('blogs.search');
     Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
 
 });

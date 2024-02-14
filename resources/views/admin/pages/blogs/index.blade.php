@@ -20,9 +20,14 @@
             <x-module-container>
                 <header>
                     <div class="row">
-                        <div class="col-md-8 module-text">
+                        <div class="col-md-4 module-text">
                             <h2 class="module-title text-gray-900 dark:text-gray-100">Blog List</h2>
                             <p class="mt-1 text-sm g-color text-green">Here is a list of all the blogs in our store</p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="search-input-field">
+                                <input type="text" class="form-control" id="dataSearch" onkeyup="searchFunction()" placeholder="Search...">
+                            </div>
                         </div>
                         <div class="col-md-4 blog-add text-end">
                             <div class="dropdown filter-dropdown">
@@ -44,7 +49,7 @@
                         </div>
                     </div>
                 </header>
-                <div class="blog-list">
+                <div class="blog-list" id="blogList">
                     @foreach ($blogs as $data)
                         <div class="card-body mb-2 blog-card">
                             <div class="row">
@@ -65,11 +70,29 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
-                <div class="data-pagination">
-                    {!! $blogs->withQueryString()->links('pagination::bootstrap-5') !!}
+                    <div class="data-pagination">
+                        {!! $blogs->withQueryString()->links('pagination::bootstrap-5') !!}
+                    </div>
                 </div>
             </x-module-container>
         </div>
     </div>
+    <script>
+        function searchFunction() {
+            let value = document.getElementById("dataSearch").value;
+            console.log(value);
+            $.ajax({
+                type: "GET",
+                url: "<?=route('blogs.search')?>",
+                data: {
+                    value
+                },
+                success: function(data) {
+                    var data = data.data;
+                    $("#blogList").html(data);
+                },
+            });
+        }
+    </script>
+
 @include('admin.master.footer')
