@@ -141,7 +141,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="date">Due Date</label>
-                                <input type="date" class="form-control" id="dueDate" name="due-date" placeholder="Enter due date">
+                                <input type="date" class="form-control" id="dueDate" name="due-date" placeholder="Enter due date" value="">
                             </div>
                         </form>
                     </div>
@@ -165,7 +165,7 @@
                     // CKEDITOR.instances['description'].setData(data.description);
                     $("#taskTitle").text(data.title);
                     $(".task-description .ck-restricted-editing_mode_standard").text(data.description);
-                    $("#dueDate").text(data.date);
+                    $("#dueDate").val(data.date);
                     $("#myModal").modal('show');
                 },
             });
