@@ -62,13 +62,15 @@ class BlogController extends Controller
         return view('/admin/pages/blogs/blog_details')->with('blog',$blog);
     }
 
-    public function blogExport(){
-        return Excel::download(new BlogsExport, 'blog-list.xlsx');
+    public function blogExport($type){
+        $time = time();
+        $file_name = 'search_history_'.$time.'.'.$type;
+        return Excel::download(new BlogsExport, $file_name);
     }
 
     public function blogSearch(Request $request){
         $data = $request['value'];
-        $blogs = DB::table('blogs')->where('status',1)->orderBy('created_at')->where('title', 'like', '%' . $data . '%')->where('trash', 0)->paginate(20);
+        $blogs = DB::table('blogs')->where('status',1)->orderBy('created_at')->where('title', 'like', '%' . $data . '%')->where('trash', 0)->paginate(2);
         if($blogs){
             $data_html = '';
             foreach ($blogs as $data){

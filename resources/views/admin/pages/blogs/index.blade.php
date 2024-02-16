@@ -26,16 +26,16 @@
                         </div>
                         <div class="col-md-4">
                             <div class="search-input-field">
-                                <input type="text" class="form-control" id="dataSearch" onkeyup="searchFunction()" placeholder="Search...">
+                                <input type="text" class="form-control" id="dataSearch" onkeyup="searchFunction()" placeholder="Search here...">
                             </div>
                         </div>
                         <div class="col-md-4 blog-add text-end">
                             <div class="dropdown filter-dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Blogs Export</button>
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item text-green" href="{{ route('blogs.export') }}}">Excel Download</a></li>
-                                  <li><a class="dropdown-item text-blue" href="{{ route('blogs.export') }}">CSV Download</a></li>
-                                  <li><a class="dropdown-item text-yellow" href="{{ route('blogs.export') }}">PDF Download</a></li>
+                                  <li><a class="dropdown-item text-green" href="{{ route('blogs.export','xlsx') }}">Excel Download</a></li>
+                                  <li><a class="dropdown-item text-blue" href="{{ route('blogs.export','csv') }}">CSV Download</a></li>
+                                  <li><a class="dropdown-item text-yellow" href="{{ route('blogs.export','pdf') }}">PDF Download</a></li>
                                 </ul>
                             </div>
                             <div class="dropdown filter-dropdown">

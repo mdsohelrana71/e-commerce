@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,9 +60,19 @@ Route::middleware('admin.auth')->group(function (){
     Route::post('/blog-store/{id?}', [BlogController::class, 'store'])->name('blog.store');
     Route::get('/blog-destroy/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
     Route::get('/blog-edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
-    Route::get('/blogs-export', [BlogController::class, 'blogExport'])->name('blogs.export');
+    Route::get('/blogs-export/{type}', [BlogController::class, 'blogExport'])->name('blogs.export');
     Route::get('/blogs-search', [BlogController::class, 'blogSearch'])->name('blogs.search');
     Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
+
+    // product routes
+    Route::get('/product/{status?}', [ProductController::class, 'index'])->name('products');
+    Route::get('/product-create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/product-store/{id?}', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/product-destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::get('/products-search', [ProductController::class, 'productSearch'])->name('products.search');
+    Route::get('/product-settings', [ProductController::class, 'productSettings'])->name('product.settings');
+
 
 });
 

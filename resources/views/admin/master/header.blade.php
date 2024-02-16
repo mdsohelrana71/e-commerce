@@ -80,17 +80,32 @@
             </li>
             <li class="nav-item menu-items">
                 <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-icon">
-                    <i class="mdi mdi-laptop"></i>
-                </span>
-                <span class="menu-title">Blogs</span>
-                <i class="menu-arrow"></i>
+                    <span class="menu-icon">
+                        <i class="mdi mdi-book-open-page-variant"></i>
+                    </span>
+                    <span class="menu-title">Blogs</span>
+                    <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('blogs') }}">Blogs</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('blogs.settings') }}">Settings</a></li>
-                </ul>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('blogs') }}">Blogs</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('blogs.settings') }}">Blog Settings</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#product-menu" aria-expanded="false" aria-controls="product-menu">
+                    <span class="menu-icon">
+                        <i class="mdi mdi-package-variant"></i>
+                    </span>
+                    <span class="menu-title">Product</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="product-menu">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('products') }}">product</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('product.settings') }}">Product Settings</a></li>
+                    </ul>
                 </div>
             </li>
             <li class="nav-item menu-items">
@@ -120,7 +135,7 @@
             <li class="nav-item menu-items">
                 <a class="nav-link" href="{{ route('shop.icon') }}">
                 <span class="menu-icon">
-                    <i class="mdi mdi-contacts"></i>
+                    <i class="mdi mdi-emoticon"></i>
                 </span>
                 <span class="menu-title">Icons</span>
                 </a>
@@ -146,7 +161,7 @@
             <li class="nav-item menu-items">
                 <a class="nav-link" data-bs-toggle="collapse" href="#shopSettings" aria-expanded="false" aria-controls="shopSettings">
                     <span class="menu-icon">
-                        <i class="mdi mdi-security"></i>
+                        <i class="mdi mdi-settings"></i>
                     </span>
                     <span class="menu-title">Shop Settigs</span>
                     <i class="menu-arrow"></i>
