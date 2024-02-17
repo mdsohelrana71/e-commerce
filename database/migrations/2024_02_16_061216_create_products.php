@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('ean')->nullable();
             $table->string('item_unit')->nullable();
             $table->integer('max_quantity_per_order')->nullable();
-            $table->integer('status')->nullable();
+            $table->integer('status')->default(1);
             $table->integer('auth_id')->nullable();
             $table->string('meta_key')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

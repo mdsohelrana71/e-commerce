@@ -109,6 +109,22 @@
                 </div>
             </li>
             <li class="nav-item menu-items">
+                <a class="nav-link" href="{{ route('category') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-playlist-play"></i>
+                </span>
+                <span class="menu-title">Category</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="{{ route('shop.icon') }}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-emoticon"></i>
+                </span>
+                <span class="menu-title">Icons</span>
+                </a>
+            </li>
+            {{-- <li class="nav-item menu-items">
                 <a class="nav-link" href="pages/forms/basic_elements.html">
                 <span class="menu-icon">
                     <i class="mdi mdi-playlist-play"></i>
@@ -133,14 +149,6 @@
                 </a>
             </li>
             <li class="nav-item menu-items">
-                <a class="nav-link" href="{{ route('shop.icon') }}">
-                <span class="menu-icon">
-                    <i class="mdi mdi-emoticon"></i>
-                </span>
-                <span class="menu-title">Icons</span>
-                </a>
-            </li>
-            <li class="nav-item menu-items">
                 <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                 <span class="menu-icon">
                     <i class="mdi mdi-security"></i>
@@ -157,7 +165,7 @@
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
                 </ul>
                 </div>
-            </li>
+            </li> --}}
             <li class="nav-item menu-items">
                 <a class="nav-link" data-bs-toggle="collapse" href="#shopSettings" aria-expanded="false" aria-controls="shopSettings">
                     <span class="menu-icon">

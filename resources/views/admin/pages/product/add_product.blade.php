@@ -122,8 +122,9 @@
                                     <div class="form-group">
                                         <label for="category">Category</label>
                                         <select class="form-select select2" name="category">
-                                            <option value="1">Category one</option>
-                                            <option value="2">Category two</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{$category->id}}">{{ $category->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">

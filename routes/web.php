@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,13 +66,21 @@ Route::middleware('admin.auth')->group(function (){
     Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
 
     // product routes
-    Route::get('/product/{status?}', [ProductController::class, 'index'])->name('products');
+    Route::get('/products/{status?}', [ProductController::class, 'index'])->name('products');
     Route::get('/product-create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product-store/{id?}', [ProductController::class, 'store'])->name('product.store');
     Route::get('/product-destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
     Route::get('/products-search', [ProductController::class, 'productSearch'])->name('products.search');
     Route::get('/product-settings', [ProductController::class, 'productSettings'])->name('product.settings');
+
+    // category routes
+    Route::get('/category/{status?}', [CategoryController::class, 'index'])->name('category');
+    Route::get('/category-create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category-store/{id?}', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category-destroy/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('/category-edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::get('/category-search', [CategoryController::class, 'categorySearch'])->name('category.search');
 
 
 });

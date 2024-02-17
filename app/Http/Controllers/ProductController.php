@@ -22,7 +22,8 @@ class ProductController extends Controller
     }
 
     public function create(){
-        return view('/admin/pages/product/add_product');
+        $categories = DB::table('categories')->where('status',1)->get();
+        return view('/admin/pages/product/add_product')->with('categories',$categories);
     }
 
     public function store(Request $request, $id = null){

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->integer('parent_id');
-            $table->string('type');
-            $table->integer('status');
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
+            $table->integer('parent_id')->default(0);
+            $table->string('type')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
