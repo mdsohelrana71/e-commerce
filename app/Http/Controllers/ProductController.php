@@ -15,7 +15,9 @@ class ProductController extends Controller
         }else{
             $products->where('status',1);
         }
-        $products = $products->where('status', 0)->paginate(5);
+        $products->leftJoin('images','products.id','images.content_id')
+                ->select('products.*','images.image');
+        $products = $products->paginate(10);
         return view('/admin/pages/product/index')->with('products',$products);
     }
 
@@ -24,26 +26,55 @@ class ProductController extends Controller
     }
 
     public function store(Request $request, $id = null){
-        if($request->hasFile('image')){
-            $image = $request->file('image');
-            $imageName = time().'.'.$image->extension();
-            $image->storeAs('public/product/images', $imageName);
-            $data['image'] = $imageName;
-        }
-
         $data['url'] = Str::slug($request->title);
         $data['title'] = $request->title;
         $data['description'] = $request->description;
+        $data['price'] = $request->price;
+        $data['offer'] = $request->offer;
+        $data['shipping'] = $request->shipping_price;
+        $data['quantity'] = $request->quantity;
+        $data['brand'] = $request->brand;
+        $data['max_quantity_per_order'] = $request->max_quantity_per_order;
+        $data['item_size'] = $request->item_size;
+        $data['item_weight'] = $request->item_weight;
+        $data['item_unit'] = $request->item_unit;
+        $data['item_color'] = $request->item_color;
+        $data['materials'] = $request->item_materials;
+        $data['gender'] = $request->item_gender;
         $data['status'] = $request->status;
+        $data['delivery_days'] = $request->delivery_days;
+        $data['ean'] = $request->ean;
         $data['auth_id'] = Auth::user()->id;
         $data['meta_key'] = $request->meta_key;
 
         DB::table('products')->updateOrInsert(['id' => $id], $data);
-        return redirect()->route('product');
+        if(!$id){
+            $productId = DB::getPdo()->lastInsertId();
+        }else {
+            $productId = $id;
+        }
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->extension();
+            $image->storeAs('public/product/images', $imageName);
+            $image_data = [
+                'image' => $imageName,
+                'content_id' => $productId,
+                'type' => 'product'
+            ];
+            DB::table('images')->updateOrInsert(['content_id' => $productId,'type' => 'product'], $image_data);
+        }
+
+        if($request->category){
+        }
+        return redirect()->route('products');
     }
 
     public function edit($id){
-        $product = DB::table('products')->where('id',$id)->first();
+        $product = DB::table('products')->where('products.id',$id)
+                ->leftJoin('images','products.id','images.content_id')
+                ->select('products.*','images.image')
+                ->first();
         return view('/admin/pages/product/add_product')->with('product',$product);
     }
 
@@ -52,18 +83,12 @@ class ProductController extends Controller
         return back();
     }
 
-    public function productDetails($slug){
-        $product = DB::table('products')->where('url',$slug)
-                ->leftJoin('users','products.auth_id','users.id')
-                ->select('products.*','users.name')
-                ->first();
-        return view('/admin/pages/product/product_details')->with('product',$product);
-    }
-
-
     public function productSearch(Request $request){
         $data = $request['value'];
-        $products = DB::table('products')->where('status',1)->orderBy('created_at')->where('title', 'like', '%' . $data . '%')->where('trash', 0)->paginate(2);
+        $products = DB::table('products')
+                    ->leftJoin('images','products.id','images.content_id')
+                    ->where('products.status',1)->where('title', 'like', '%' . $data . '%')
+                    ->select('products.*','images.image')->paginate(10);
         if($products){
             $data_html = '';
             foreach ($products as $data){
@@ -73,15 +98,11 @@ class ProductController extends Controller
                                         <img class="card-img-top" src="'. get_image($data->image,'product').' " alt="">
                                     </div>
                                     <div class="product-info col-sm-8 col-md-8 col-lg-8">
-                                        <a href=" ' . route('product.details',$data->url) . ' " target="_blank">
-                                            <h4 class="product-title">'. substr($data->title,0,100) . ' </h4>
-                                        </a>
-                                        <p class="card-text">' . substr(strip_tags($data->description), 0, 250) . '...'. '</p>
+                                        <h4 class="product-title">'. substr($data->title,0,100) . ' </h4>
                                     </div>
                                     <div class="product-action col-sm-2 col-md-2 col-lg-2">
                                         <a href="' . route('product.edit',$data->id) . '" class="btn btn-primary me-2">Edit</a>
                                         <a href="' . route('product.destroy',$data->id) . '" class="btn btn-danger me-2">Delete</a>
-                                        <a href="' . route('product.details',$data->url) . '" class="btn btn-info" target="_blank">View</a>
                                     </div>
                                 </div>
                             </div>';

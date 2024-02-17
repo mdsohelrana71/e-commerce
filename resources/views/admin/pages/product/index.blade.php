@@ -13,6 +13,15 @@
         .product-card:hover{
             background-color: #fff;
         }
+        .product-data-info{
+            display: flex;
+        }
+        .product-list .price, .quantity, .ean, .shipping-price{
+            width: 25%;
+        }
+        .product-list .product-data-info span{
+            color: grey
+        }
     </style>
     <!-- partial -->
     <div class="content-wrapper">
@@ -49,15 +58,35 @@
                                     <img class="card-img-top" src="{{ get_image($data->image,'product') }}" alt="">
                                 </div>
                                 <div class="product-info col-sm-8 col-md-8 col-lg-8">
-                                    <a href="{{ route('product.details',$data->url) }}" target="_blank">
+                                    <a href="" target="_blank">
                                         <h4 class="product-title">{{ substr($data->title,0,100) }}</h4>
                                     </a>
-                                    <p class="card-text">{!! substr(strip_tags($data->description), 0, 250) . '...'; !!}</p>
+                                    <div class="category">
+                                        <strong>Category: </strong><span>Category one</span>,<span>Category two</span>
+                                    </div>
+                                    <div class="product-data-info">
+                                        <div class="price">
+                                            <strong>Price:</strong>
+                                            <span>{{ $data->price }}</span>
+                                        </div>
+                                        <div class="quantity">
+                                            <strong>Quantity:</strong>
+                                            <span>{{ $data->quantity }}</span>
+                                        </div>
+                                        <div class="ean">
+                                            <strong>Ean:</strong>
+                                            <span>{{ $data->ean }}</span>
+                                        </div>
+                                        <div class="shipping-price">
+                                            <strong>Shipping price:</strong>
+                                            <span>{{ $data->shipping }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="product-action col-sm-2 col-md-2 col-lg-2">
                                     <a href="{{ route('product.edit',$data->id) }}" class="btn btn-primary me-2">Edit</a>
                                     <a href="{{ route('product.destroy',$data->id) }}" class="btn btn-danger me-2">Delete</a>
-                                    <a href="{{ route('product.details',$data->url) }}" class="btn btn-info" target="_blank">View</a>
+                                    {{-- <a href="{{ route('product.details',$data->url) }}" class="btn btn-info" target="_blank">View</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -72,7 +101,6 @@
     <script>
         function searchFunction() {
             let value = document.getElementById("dataSearch").value;
-            console.log(value);
             $.ajax({
                 type: "GET",
                 url: "<?=route('products.search')?>",

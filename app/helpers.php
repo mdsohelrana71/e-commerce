@@ -1,5 +1,15 @@
 <?php
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+function admin_url(){
+    return url('/dashboard');
+}
+
+function base_url(){
+    return url('/');
+}
 
 function user_name(){
     $auth = Auth::check();
@@ -45,7 +55,7 @@ function get_potion($option_key, $option_group = null) {
 
 function get_image($imageName, $type = null){
     if($type == 'product'){
-
+        $image =  asset('storage/product/images/'.$imageName);
     }elseif($type == 'blog'){
         $image =  asset('storage/blog/images/'.$imageName);
     }elseif($type == 'logo'){

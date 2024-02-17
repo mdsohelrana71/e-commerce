@@ -94,7 +94,7 @@ p, a, span, label, button, h1, h2, h3, h4, h5, h6, strong{
     font-size: 0.875rem;
     padding: 0.625rem 0.6875rem;
     background-color: #ffffff;
-    border-radius: 2px;
+    border-radius: 4px;
     color: #2A3038;
 }
 
