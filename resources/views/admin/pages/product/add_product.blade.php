@@ -24,7 +24,32 @@
             $routeParams = [];
             $title = 'Add';
         }
+
+        if(isset($product) and isset($product->categories)){
+            $categories = $product->categories;
+            $categoriesData = explode(', ', $categories);
+
+            // $categories = array_map(function ($pair) {
+            //     $parts = explode(':', $pair);
+            //     return ['id' => $parts[0], 'name' => $parts[1]];
+            // }, $categoriesData);
+
+            $categories = [];
+            foreach ($categoriesData as $pair) {
+                $parts = explode(':', $pair);
+                $categories[$parts[0]] =  $parts[1];
+            }
+        }
     @endphp
+    @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     <div class="content-wrapper">
         <div class="row">
             <x-module-container>
@@ -121,10 +146,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category">Category</label>
-                                        <select class="form-select select2" name="category">
-                                            @foreach ($categories as $category)
-                                                <option value="{{$category->id}}">{{ $category->name }}</option>
-                                            @endforeach
+                                        <select class="form-select select2" name="category[]">
+                                            @if(@isset($categories))
+                                                @foreach ($categories as $key =>$category)
+                                                    <option value="{{$key}}">{{ $category }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="form-group">

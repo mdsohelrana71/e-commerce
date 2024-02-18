@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('parent_id')->nullable();
+            $table->integer('category_id')->nullable();
             $table->string('type')->nullable();
             $table->integer('content_id')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

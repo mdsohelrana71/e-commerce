@@ -15,12 +15,16 @@
         }
         .product-data-info{
             display: flex;
+            padding-top: 5px;
         }
         .product-list .price, .quantity, .ean, .shipping-price{
             width: 25%;
         }
-        .product-list .product-data-info span{
-            color: grey
+        .product-list  .product-data-info span{
+            color: #484848
+        }
+        .product-list  .category span{
+            color: #484848
         }
     </style>
     <!-- partial -->
@@ -62,7 +66,7 @@
                                         <h4 class="product-title">{{ substr($data->title,0,100) }}</h4>
                                     </a>
                                     <div class="category">
-                                        <strong>Category: </strong><span>Category one</span>,<span>Category two</span>
+                                        <strong>Category:</strong> <span>{{ $data->category_names }}</span>
                                     </div>
                                     <div class="product-data-info">
                                         <div class="price">

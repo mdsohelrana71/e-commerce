@@ -5,28 +5,53 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
     public function index($status = null){
         $products = DB::table('products')->orderBy('created_at');
         if($status !== null){
-            $products->where('status',$status);
+            $products->where('products.status',$status);
         }else{
-            $products->where('status',1);
+            $products->where('products.status',1);
         }
-        $products->leftJoin('images','products.id','images.content_id')
-                ->select('products.*','images.image');
+        $products->leftJoin('images', 'products.id', 'images.content_id')
+                ->leftJoin('categories_items', 'products.id', 'categories_items.content_id')
+                ->leftJoin('categories', 'categories_items.category_id', 'categories.id')
+                ->select('products.*', 'images.image', DB::raw("GROUP_CONCAT(categories.name SEPARATOR ', ') AS category_names"))
+                ->groupBy('products.id', 'images.image');
         $products = $products->paginate(10);
         return view('/admin/pages/product/index')->with('products',$products);
     }
 
     public function create(){
-        $categories = DB::table('categories')->where('status',1)->get();
+        $categories = DB::table('categories')->where('status',1)->where('type',1)->get();
         return view('/admin/pages/product/add_product')->with('categories',$categories);
     }
 
     public function store(Request $request, $id = null){
+
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string',
+            'price'       => 'required|numeric',
+            'category'    => 'required',
+            'shipping_price' => 'required|numeric',
+            'quantity'    => 'required|integer',
+            'status'      => 'required',
+            'ean'         => 'required|integer|min:8',
+            'offer'       => 'nullable|numeric',
+            'max_quantity_per_order' => 'nullable|integer',
+            'item_size'   => 'nullable|string|max:255',
+            'item_unit'   => 'nullable|string|max:255',
+            'item_color'  => 'nullable|string|max:255',
+            'item_materials' => 'nullable|string|max:255',
+            'delivery_days'=> 'nullable|integer',
+            'meta_key'    => 'nullable|string|max:255',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
         $data['url'] = Str::slug($request->title);
         $data['title'] = $request->title;
         $data['description'] = $request->description;
@@ -67,6 +92,15 @@ class ProductController extends Controller
         }
 
         if($request->category){
+            $categories = $request->category;
+            DB::table('categories_items')->where('content_id',$productId)->delete();
+            foreach($categories as $cat_id){
+                DB::table('categories_items')->insert([
+                    'category_id' => $cat_id,
+                    'content_id' => $productId,
+                    'type' => 'product'
+                ]);
+            }
         }
         return redirect()->route('products');
     }
@@ -74,7 +108,10 @@ class ProductController extends Controller
     public function edit($id){
         $product = DB::table('products')->where('products.id',$id)
                 ->leftJoin('images','products.id','images.content_id')
-                ->select('products.*','images.image')
+                ->leftJoin('categories_items', 'products.id', 'categories_items.content_id')
+                ->leftJoin('categories', 'categories_items.category_id', 'categories.id')
+                ->select('products.*', 'images.image', DB::raw("GROUP_CONCAT(categories.id, ':', categories.name SEPARATOR ', ') AS categories"))
+                ->groupBy('products.id', 'images.image')
                 ->first();
         return view('/admin/pages/product/add_product')->with('product',$product);
     }
