@@ -2,11 +2,13 @@
 (function($) {
     'use strict';
 
-    if ($(".js-example-basic-single").length) {
-        $(".js-example-basic-single").select2();
+    if ($(".single-select").length) {
+        $(".single-select").select2();
     }
     if ($(".multiple-select").length) {
-        $(".multiple-select").select2();
+        $(".multiple-select").select2({
+            placeholder: "Select category",
+        });
     }
 })(jQuery);
 

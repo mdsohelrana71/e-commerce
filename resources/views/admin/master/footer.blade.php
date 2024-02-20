@@ -25,8 +25,9 @@
 <!-- End plugin js for this page -->
 
 <!-- Custom js for this page -->
-<script src="{{ asset('admin/assets/js/module-common.js') }}"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/super-build/ckeditor.js"></script>
+<script src="{{ asset('admin/assets/js/module-common.js') }}"></script>
+
 
 <!-- End custom js for this page -->
 </body>
