@@ -25,21 +25,15 @@
             $title = 'Add';
         }
 
-        if(isset($product) and isset($product->categories)){
-            $categories = $product->categories;
-            $categoriesData = explode(', ', $categories);
-
-            // $categories = array_map(function ($pair) {
-            //     $parts = explode(':', $pair);
-            //     return ['id' => $parts[0], 'name' => $parts[1]];
-            // }, $categoriesData);
-
-            $categories = [];
-            foreach ($categoriesData as $pair) {
-                $parts = explode(':', $pair);
-                $categories[$parts[0]] =  $parts[1];
-            }
-        }
+        // if(isset($product) and isset($product->categories)){
+        //     $categories = $product->categories;
+        //     $categoriesData = explode(', ', $categories);
+        //     $categories = [];
+        //     foreach ($categoriesData as $pair) {
+        //         $parts = explode(':', $pair);
+        //         $categories[$parts[0]] =  $parts[1];
+        //     }
+        // }
     @endphp
     @if ($errors->any())
             <div class="alert alert-danger">
@@ -146,10 +140,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category">Category</label>
-                                        <select class="form-select select2" name="category[]">
-                                            @if(@isset($categories))
-                                                @foreach ($categories as $key =>$category)
-                                                    <option value="{{$key}}">{{ $category }}</option>
+                                        <select class="form-select multiple-select" multiple="multiple" name="category[]">
+                                            @if(isset($categories))
+                                                @foreach ($categories as $key => $category)
+                                                    <option value="{{$key}}">{{ $category->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
