@@ -10,8 +10,22 @@ class FrontendController extends Controller
         return view('/frontend/index');
     }
 
-    public function shop(){
-        return view('/frontend/shop');
+    public function products(){
+        $products = DB::table('products')->orderBy('products.created_at')->where('status',1)
+                ->leftJoin('images', 'products.id', 'images.content_id')
+                ->select('products.title', 'products.price', 'products.url', 'images.image')
+                ->paginate(8);
+        return view('/frontend/shop')->with('products',$products);
+    }
+
+    public function productDetails($url){
+        $product = DB::table('products')->where('url',$url)
+                ->leftJoin('images', 'products.id', 'images.content_id')
+                ->leftJoin('categories_items', 'products.id', 'categories_items.content_id')
+                ->leftJoin('categories', 'categories_items.category_id', 'categories.id')
+                ->select('products.*', 'images.image', DB::raw("GROUP_CONCAT(categories.name SEPARATOR ', ') AS category_names"))
+                ->groupBy('products.id', 'images.image')->first();
+        return view('/frontend/product_details')->with('product',$product);
     }
 
     public function blog(){

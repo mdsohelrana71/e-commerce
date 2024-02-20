@@ -25,7 +25,7 @@
         $home = $shop = $blog = $aboute = $service = $contact ='';
         if($current_route == 'home'){
             $home = 'active';
-        }elseif($current_route == 'shop') {
+        }elseif($current_route == 'products') {
             $shop = 'active';
         }elseif($current_route == 'blog') {
             $blog = 'active';
@@ -54,7 +54,7 @@
                         <a class="nav-link" href="{{ route('home'); }}">Home</a>
                     </li>
                     <li class="nav-item {{$shop}}">
-                        <a class="nav-link" href="{{ route('shop'); }}">Shop</a>
+                        <a class="nav-link" href="{{ route('products'); }}">Shop</a>
                     </li>
                     <li class="nav-item {{$aboute}}">
                         <a class="nav-link" href="{{ route('about'); }}">About us</a>

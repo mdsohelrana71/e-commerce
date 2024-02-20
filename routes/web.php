@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
-Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
+Route::get('/products', [FrontendController::class, 'products'])->name('products');
+Route::get('/product-details/{slug}', [FrontendController::class, 'productDetails'])->name('product.details');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('blog');
 Route::get('/blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog.details');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
@@ -39,8 +40,7 @@ Route::middleware('auth')->group(function (){
 });
 
 // Admin all routes start
-
-Route::middleware('admin.auth')->group(function (){
+Route::middleware('admin.auth')->prefix('admin')->group(function (){
 
     // task routes
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
