@@ -66,7 +66,7 @@ Route::middleware('admin.auth')->prefix('admin')->group(function (){
     Route::get('/blogs-settings', [BlogController::class, 'blogSettings'])->name('blogs.settings');
 
     // product routes
-    Route::get('/products/{status?}', [ProductController::class, 'index'])->name('products');
+    Route::get('/products/{status?}', [ProductController::class, 'index'])->name('products.admin');
     Route::get('/product-create', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product-store/{id?}', [ProductController::class, 'store'])->name('product.store');
     Route::get('/product-destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');

@@ -103,7 +103,7 @@
                 </a>
                 <div class="collapse" id="product-menu">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="{{ route('products') }}">product</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('products.admin') }}">product</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ route('product.settings') }}">Product Settings</a></li>
                     </ul>
                 </div>
