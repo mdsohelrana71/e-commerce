@@ -36,7 +36,7 @@ class ProductController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'required|string',
             'price'       => 'required|numeric',
-            // 'category'    => 'required',
+            'category'    => 'required',
             'shipping_price' => 'required|numeric',
             'quantity'    => 'required|integer',
             'status'      => 'required',
@@ -110,10 +110,17 @@ class ProductController extends Controller
                 ->leftJoin('images','products.id','images.content_id')
                 ->leftJoin('categories_items', 'products.id', 'categories_items.content_id')
                 ->leftJoin('categories', 'categories_items.category_id', 'categories.id')
-                ->select('products.*', 'images.image', DB::raw("GROUP_CONCAT(categories.id, ':', categories.name SEPARATOR ', ') AS categories"))
+                ->select('products.*', 'images.image', DB::raw("GROUP_CONCAT(categories.id) AS category_ids"))
                 ->groupBy('products.id', 'images.image')
                 ->first();
-        return view('/admin/pages/product/add_product')->with('product',$product);
+        $categories = DB::table('categories')->where('status',1)->where('type',1)->get();
+
+        $product_category_ids = [];
+        if(isset($product) and isset($product->category_ids)){
+            $category_ids = $product->category_ids;
+            $product_category_ids = explode(',', $category_ids);
+        }
+        return view('/admin/pages/product/add_product')->with(['product' => $product, 'product_category_ids' => $product_category_ids, 'categories' => $categories]);
     }
 
     public function destroy($id){
