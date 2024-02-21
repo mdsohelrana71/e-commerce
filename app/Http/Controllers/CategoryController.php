@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
     public function index($status = null){
-        $categories = DB::table('categories')->orderBy('name');
+        $categories = Category::where('parent_id',0)->with('children')->orderBy('name');
         if($status !== null){
             $categories->where('status',$status);
         }else{
@@ -20,7 +20,8 @@ class CategoryController extends Controller
     }
 
     public function create(){
-        return view('/admin/pages/category/add_category');
+        $categories = DB::table('categories')->orderBy('name')->where('status',1)->get();
+        return view('/admin/pages/category/add_category')->with('categories',$categories);
     }
 
     public function store(Request $request, $id = null){
@@ -33,8 +34,9 @@ class CategoryController extends Controller
     }
 
     public function edit($id){
+        $categories = DB::table('categories')->orderBy('name')->where('status',1)->get();
         $category = DB::table('categories')->where('id',$id)->first();
-        return view('/admin/pages/category/add_category')->with('category',$category);
+        return view('/admin/pages/category/add_category')->with(['category'=>$category,'categories'=>$categories]);
     }
 
     public function destroy($id){
@@ -44,23 +46,25 @@ class CategoryController extends Controller
 
     public function categorySearch(Request $request){
         $data = $request['value'];
-        $categories = DB::table('categories')
+        $categories = Category::where('parent_id',0)->with('children')->orderBy('name')
                     ->where('status',1)->where('name', 'like', '%' . $data . '%')
                     ->paginate(25);
+        // dump($categories);
         if($categories){
             $data_html = '';
             foreach ($categories as $data){
-                $data_html.='<div class="card-body mb-2 category-card">
-                                <div class="row">
-                                    <div class="category-info col-sm-10 col-md-10 col-lg-10">
-                                        <h4 class="category-title">'. substr($data->name,0,100) . ' </h4>
-                                    </div>
-                                    <div class="category-action col-sm-2 col-md-2 col-lg-2">
-                                        <a href="' . route('category.edit',$data->id) . '" class="btn btn-primary me-2">Edit</a>
-                                        <a href="' . route('category.destroy',$data->id) . '" class="btn btn-danger me-2">Delete</a>
-                                    </div>
-                                </div>
-                            </div>';
+                $data_html.='<li class="parent-category">
+                    <div class="category">
+                        <span class="categoy-title">'. $data->name .'</span>
+                        <span class="categoy-action">
+                            <a href="'. route('category.edit',$data->id). '" class="btn btn-primary btn-sm me-2">Edit</a>
+                            <a href="'. route('category.destroy',$data->id). '" class="btn btn-danger btn-sm me-2">Delete</a>
+                        </span>
+                    </div>';
+                    if ($data->children->count() > 0) {
+                        $data_html .= view('admin.pages.category.subcategories', ['categories' => $data->children])->render();
+                    }
+                '</li>';
             }
             $data_html.='<div class="data-pagination">'. $categories->withQueryString()->links('pagination::bootstrap-5').'</div>';
             return response()->json(['data' => $data_html]);

@@ -37,26 +37,28 @@
                 </header>
                 <div class="category-add-form card col-xs-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
                     <div class="card-body">
-                        <form action="{{ route($route, $routeParams) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route($route, $routeParams) }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-xs-12 col-lg-12">
                                     <div class="form-group">
                                         <label for="name">Category name</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter category title" value="{{ isset($category) ? $category->title:'' }}">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter category title" value="{{ isset($category) ? $category->name:'' }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="Brand">Content Type</label>
                                         <select class="form-select" name="type">
-                                            <option value="1">Product</option>
-                                            <option value="2">Blog</option>
+                                            <option value="1" @if(isset($category) && $category->type == 1) selected @endif>Product</option>
+                                            <option value="2" @if(isset($category) && $category->type == 2) selected @endif>Blog</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="parent_id">Parent categories</label>
-                                        <select class="form-select" name="parent_id">
-                                            <option value="0">Please select parent cateory</option>
-                                            <option value="1">Parent one</option>
+                                        <label for="parent_id">Choose a parent</label>
+                                        <select class="form-select single-select" name="parent_id">
+                                            <option value="0">Choose a parent</option>
+                                            @foreach ($categories as $data)
+                                                <option value="{{ $data->id }}" @if(isset($category) && $category->parent_id != 0 && $category->parent_id == $data->id) selected @endif>{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

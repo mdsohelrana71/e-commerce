@@ -22,6 +22,26 @@
         .category-list .category-data-info span{
             color: grey
         }
+
+        .category-list ul{
+            list-style-type: none;
+        }
+
+        .category-list .parent-category{
+            background: #fff;
+            color: #000;
+            border-radius: 4px;
+            padding: 5px 5px 5px 10px;
+            margin: 0px 0px 5px 0px;
+        }
+        .category-list .category{
+            background: #f6f6f6;
+            border-radius: 4px;
+            padding: 5px 5px 5px 10px;
+            margin: 5px 0px 5px 0px;
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
     <!-- partial -->
     <div class="content-wrapper">
@@ -50,23 +70,25 @@
                         </div>
                     </div>
                 </header>
-                <div class="category-list" id="categoryList">
-                    @foreach ($categories as $data)
-                        <div class="card-body mb-2 category-card">
-                            <div class="row">
-                                <div class="category-info col-sm-10 col-md-10 col-lg-10">
-                                    <a href="" target="_blank">
-                                        <h4 class="category-title">{{ substr($data->name,0,100) }}</h4>
-                                    </a>
+                <div class="category-list">
+                    <ul id="categoryList">
+                        @foreach ($categories as $category)
+                            <li class="parent-category">
+                                <div class="category">
+                                    <span class="categoy-title">
+                                        {{ $category->name }}
+                                    </span>
+                                    <span class="categoy-action">
+                                        <a href="{{ route('category.edit',$category->id) }}" class="btn btn-primary btn-sm me-2">Edit</a>
+                                        <a href="{{ route('category.destroy',$category->id) }}" class="btn btn-danger btn-sm me-2">Delete</a>
+                                    </span>
                                 </div>
-                                <div class="category-action col-sm-2 col-md-2 col-lg-2">
-                                    <a href="{{ route('category.edit',$data->id) }}" class="btn btn-primary me-2">Edit</a>
-                                    <a href="{{ route('category.destroy',$data->id) }}" class="btn btn-danger me-2">Delete</a>
-                                    {{-- <a href="{{ route('category.details',$data->url) }}" class="btn btn-info" target="_blank">View</a> --}}
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                                @if ($category->children->count() > 0)
+                                    @include('admin/pages/category/subcategories', ['categories' => $category->children])
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
                     <div class="data-pagination">
                         {!! $categories->withQueryString()->links('pagination::bootstrap-5') !!}
                     </div>

@@ -3,11 +3,13 @@
     'use strict';
 
     if ($(".single-select").length) {
-        $(".single-select").select2();
+        $(".single-select").select2({
+            placeholder: "Choose your data",
+        });
     }
     if ($(".multiple-select").length) {
         $(".multiple-select").select2({
-            placeholder: "Select category",
+            placeholder: "Choose your data",
         });
     }
 })(jQuery);
