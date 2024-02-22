@@ -19,9 +19,19 @@ class CategoryController extends Controller
         return view('/admin/pages/category/index')->with('categories',$categories);
     }
 
-    public function create(){
-        $categories = DB::table('categories')->orderBy('name')->where('status',1)->get();
-        return view('/admin/pages/category/add_category')->with('categories',$categories);
+    public function create(Request $request){
+        $data = (int) $request['value'];
+        if($data){
+            $type = $data;
+        }else{
+            $type = 1;
+        }
+        $categories = DB::table('categories')->orderBy('name')->where('status',1)->where('type',$type)->get();
+        if($data){
+            return response()->json(['data' => $categories]);
+        }else{
+            return view('/admin/pages/category/add_category')->with('categories',$categories);
+        }
     }
 
     public function store(Request $request, $id = null){

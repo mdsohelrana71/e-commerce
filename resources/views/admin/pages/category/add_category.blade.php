@@ -47,14 +47,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="Brand">Content Type</label>
-                                        <select class="form-select" name="type">
+                                        <select class="form-select" name="type" id="contentType" onchange="getSelectedType()">
                                             <option value="1" @if(isset($category) && $category->type == 1) selected @endif>Product</option>
                                             <option value="2" @if(isset($category) && $category->type == 2) selected @endif>Blog</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="parent_id">Choose a parent</label>
-                                        <select class="form-select single-select" name="parent_id">
+                                        <select class="form-select single-select" name="parent_id" id="ParentList">
                                             <option value="0">Choose a parent</option>
                                             @foreach ($categories as $data)
                                                 <option value="{{ $data->id }}" @if(isset($category) && $category->parent_id != 0 && $category->parent_id == $data->id) selected @endif>{{ $data->name }}</option>
@@ -70,4 +70,24 @@
             </x-module-container>
         </div>
     </div>
+    <script>
+        function getSelectedType() {
+          var value = document.getElementById("contentType").value;
+          $.ajax({
+                type: "GET",
+                url: "<?=route('category.create')?>",
+                data: {
+                    value
+                },
+                success: function(data) {
+                    var data = data.data;
+                    var optionsHtml = "";
+                    data.forEach(function(item) {
+                        optionsHtml += '<option value="' + item.id + '">' + item.name + '</option>';
+                    });
+                    $("#ParentList").empty().append(optionsHtml);
+                },
+            });
+        }
+    </script>
 @include('admin.master.footer')
