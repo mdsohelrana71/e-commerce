@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -19,6 +18,8 @@ class ProductController extends Controller
         $products->leftJoin('images', 'products.id', 'images.content_id')
                 ->leftJoin('categories_items', 'products.id', 'categories_items.content_id')
                 ->leftJoin('categories', 'categories_items.category_id', 'categories.id')
+                ->where('categories.status', 1)
+                ->where('categories_items.type', 'product')
                 ->select('products.*', 'images.image', DB::raw("GROUP_CONCAT(categories.name SEPARATOR ', ') AS category_names"))
                 ->groupBy('products.id', 'images.image');
         $products = $products->paginate(10);
@@ -93,7 +94,7 @@ class ProductController extends Controller
 
         if($request->category){
             $categories = $request->category;
-            DB::table('categories_items')->where('content_id',$productId)->delete();
+            DB::table('categories_items')->where('content_id',$productId)->where('type','product')->delete();
             foreach($categories as $cat_id){
                 DB::table('categories_items')->insert([
                     'category_id' => $cat_id,
@@ -110,6 +111,8 @@ class ProductController extends Controller
                 ->leftJoin('images','products.id','images.content_id')
                 ->leftJoin('categories_items', 'products.id', 'categories_items.content_id')
                 ->leftJoin('categories', 'categories_items.category_id', 'categories.id')
+                ->where('categories.status', 1)
+                ->where('categories_items.type', 'product')
                 ->select('products.*', 'images.image', DB::raw("GROUP_CONCAT(categories.id) AS category_ids"))
                 ->groupBy('products.id', 'images.image')
                 ->first();

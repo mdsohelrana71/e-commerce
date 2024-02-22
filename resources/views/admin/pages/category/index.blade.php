@@ -63,8 +63,8 @@
                             <div class="dropdown filter-dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item text-green" href="{{ route('category','1') }}">Publish</a></li>
-                                  <li><a class="dropdown-item text-yellow" href="{{ route('category','0') }}">Unpublish</a></li>
+                                  <li><a class="dropdown-item text-green" href="{{ route('category','1') }}">Product Categories</a></li>
+                                  <li><a class="dropdown-item text-yellow" href="{{ route('category','2') }}">Blog Categories</a></li>
                                 </ul>
                             </div>
                             <a href="{{ route('category.create') }}" class="btn btn-success"><i class="mdi mdi-plus-circle"></i>Add</a>

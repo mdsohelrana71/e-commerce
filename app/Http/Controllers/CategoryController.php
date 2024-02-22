@@ -8,12 +8,12 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index($status = null){
+    public function index($type = null){
         $categories = Category::where('parent_id',0)->with('children')->orderBy('name');
-        if($status !== null){
-            $categories->where('status',$status);
+        if($type !== null){
+            $categories->where('type',$type);
         }else{
-            $categories->where('status',1);
+            $categories->where('type',1);
         }
         $categories = $categories->paginate(25);
         return view('/admin/pages/category/index')->with('categories',$categories);

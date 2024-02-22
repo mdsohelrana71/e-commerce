@@ -56,9 +56,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="description">Category</label>
-                                <select class="form-select select2" name="status">
-                                    <option value="1">Category one</option>
-                                    <option value="2">Category two</option>
+                                <select class="form-select multiple-select" multiple="multiple" name="category[]">
+                                    @if(isset($categories))
+                                        @foreach ($categories as $category)
+                                            @if(in_array($category->id, $blog_category_ids))
+                                                <option value="{{$category->id}}" selected>{{ $category->name }}</option>
+                                            @else
+                                                <option value="{{$category->id}}">{{ $category->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group">

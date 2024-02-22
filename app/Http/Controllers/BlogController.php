@@ -22,7 +22,8 @@ class BlogController extends Controller
     }
 
     public function create(){
-        return view('/admin/pages/blogs/add_blog');
+        $categories = DB::table('categories')->where('status',1)->where('type',2)->get();
+        return view('/admin/pages/blogs/add_blog')->with('categories',$categories);
     }
 
     public function store(Request $request, $id = null){
@@ -41,12 +42,44 @@ class BlogController extends Controller
         $data['meta_key'] = $request->meta_key;
 
         DB::table('blogs')->updateOrInsert(['id' => $id], $data);
+
+        if(!$id){
+            $blogId = DB::getPdo()->lastInsertId();
+        }else {
+            $blogId = $id;
+        }
+        if($request->category){
+            $categories = $request->category;
+            DB::table('categories_items')->where('content_id',$blogId)->where('type','blog')->delete();
+            foreach($categories as $cat_id){
+                DB::table('categories_items')->insert([
+                    'category_id' => $cat_id,
+                    'content_id' => $blogId,
+                    'type' => 'blog'
+                ]);
+            }
+        }
+
         return redirect()->route('blogs');
     }
 
     public function edit($id){
-        $blog = DB::table('blogs')->where('id',$id)->first();
-        return view('/admin/pages/blogs/add_blog')->with('blog',$blog);
+        $blog = DB::table('blogs')->where('blogs.id',$id)
+                        ->leftJoin('categories_items', 'blogs.id', 'categories_items.content_id')
+                        ->leftJoin('categories', 'categories_items.category_id', 'categories.id')
+                        ->where('categories.status', 1)
+                        ->where('categories_items.type', 'blog')
+                        ->select('blogs.*', DB::raw("GROUP_CONCAT(categories.id) AS category_ids"))
+                        ->groupBy('blogs.id')
+                        ->first();
+
+        $blog_category_ids = [];
+        if(isset($blog) and isset($blog->category_ids)){
+            $category_ids = $blog->category_ids;
+            $blog_category_ids = explode(',', $category_ids);
+        }
+        $categories = DB::table('categories')->where('status',1)->where('type',2)->get();
+        return view('/admin/pages/blogs/add_blog')->with(['blog'=>$blog,'blog_category_ids'=>$blog_category_ids, 'categories' => $categories]);
     }
 
     public function destroy($id){
