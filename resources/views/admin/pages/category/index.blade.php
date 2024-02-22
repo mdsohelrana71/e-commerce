@@ -37,6 +37,7 @@
         .category-list .category{
             background: #f6f6f6;
             border-radius: 4px;
+            border: 1px solid #dedede;
             padding: 5px 5px 5px 10px;
             margin: 5px 0px 5px 0px;
             display: flex;
