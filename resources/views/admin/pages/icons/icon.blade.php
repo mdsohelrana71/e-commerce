@@ -13,7 +13,7 @@
                 </header>
                 <!-- partial -->
                 <div class="icon-panel">
-                    <div class="content-wrapper">
+                    <div class="icon-list">
                         <div class="row">
                             <div class="col-lg-12 grid-margin">
                                 <div class="card">
