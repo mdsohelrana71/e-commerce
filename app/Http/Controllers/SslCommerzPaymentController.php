@@ -199,7 +199,6 @@ class SslCommerzPaymentController extends Controller
             echo "Invalid Transaction";
         }
 
-
     }
 
     public function fail(Request $request)
