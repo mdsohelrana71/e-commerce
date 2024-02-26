@@ -70,6 +70,7 @@ Route::middleware('admin.auth')->prefix('admin')->group(function (){
     Route::get('/shop-profile', [ProfileController::class, 'shopProfile'])->name('shop.profile');
     Route::post('/shop-profile-update', [ProfileController::class, 'shopProfileUpdate'])->name('shop.profile.update');
     Route::get('/shop-icon', [ProfileController::class, 'shopIcon'])->name('shop.icon');
+    Route::get('/shop-settings', [ProfileController::class, 'shopSettings'])->name('shop.settings');
 
     // blog routes
     Route::get('/blogs/{status?}', [BlogController::class, 'index'])->name('blogs');

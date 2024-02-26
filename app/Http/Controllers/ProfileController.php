@@ -107,4 +107,8 @@ class ProfileController extends Controller
     public function shopIcon(){
         return view('/admin/pages/icons/icon');
     }
+
+    public function shopSettings(){
+        return view('/admin/pages/shop_settings/shop_settings');
+    }
 }
