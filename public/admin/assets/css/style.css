@@ -20278,9 +20278,10 @@ div.tagsinput {
             margin-left: 0;
             margin-right: auto; } }
     .navbar .navbar-menu-wrapper .search input {
-      background: #191c24;
-      padding: 13px 20px 11px 20px;
-      border: 1px solid #2c2e33; }
+        padding: 13px 20px 11px 20px;
+        border: 1px solid #2A3038;
+        background-color: #2A3038;
+                color: #fff; }
       .navbar .navbar-menu-wrapper .search input::placeholder {
         color: #6c7293;
         font-size: 0.875rem; }

@@ -181,7 +181,7 @@
                         <a class="nav-link" href="{{ route('shop.profile') }}">Shop Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('shop.settings') }}">Others</a>
+                        <a class="nav-link" href="{{ route('shop.settings') }}">Others Settigs</a>
                     </li>
                 </ul>
                 </div>
@@ -200,12 +200,12 @@
                     <span class="mdi mdi-menu"></span>
                     </button>
                     <ul class="navbar-nav w-100">
-                    <li class="nav-item w-100">
+                    {{-- <li class="nav-item w-100">
                         <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
                         <input type="text" class="form-control" placeholder="Search products">
                         </form>
                     </li>
-                    </ul>
+                    </ul> --}}
                     <ul class="navbar-nav navbar-nav-right">
                     {{-- <li class="nav-item dropdown d-none d-lg-block">
                         <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>

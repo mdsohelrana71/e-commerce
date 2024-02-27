@@ -3,7 +3,9 @@
         <style>
             .shop-settings-list i{
                 font-size: 40px;
-                color: #0090e7;
+            }
+            .shop-settings-list a{
+                color: #000;
             }
             .settings-title strong{
                 font-size: 20px;
@@ -20,16 +22,40 @@
             .shop-settings-list .settings-title {
                 flex: 1;
             }
-            .search-input-field .form-control, .form-control:focus{
+            .search-input-field .form-control{
                 border: 1px solid #2A3038;
-                height: calc(2.25rem + 2px);
-                font-weight: normal;
-                font-size: 0.875rem;
-                padding: 0.625rem 0.6875rem;
                 background-color: #2A3038;
-                border-radius: 4px;
                 color: #fff;
             }
+
+            .search-input-field .form-control:focus{
+                border: 0.5px solid #6d7293 !important;
+                background-color: #2A3038;
+                color: #fff;
+            }
+            .shop-settings-list .card-body:hover{
+                background-color: #ddeaed;
+            }
+            .shop-settings-list .card:nth-child(5n+1) .card-body .settings-icon i {
+                color: #0379f0;
+            }
+            .shop-settings-list .card:nth-child(5n+2) .card-body .settings-icon i {
+                color: #2c9ce2;
+            }
+            .shop-settings-list .card:nth-child(5n+3) .card-body .settings-icon i {
+                color: #00e5fe;
+            }
+            .shop-settings-list .card:nth-child(5n+4) .card-body .settings-icon i {
+                color: #ffab00;
+            }
+            .shop-settings-list .card:nth-child(5n+5) .card-body .settings-icon i {
+                color: #4e50e5;
+            }
+            .shop-settings-list .card:nth-child(5n+6) .card-body .settings-icon i {
+                color: #8f5fe8;
+            }
+
+
         </style>
         <!-- partial -->
         <div class="content-wrapper">
@@ -58,49 +84,55 @@
                     <div class="shop-settings-list">
                         <div class="row">
                             <div class="col-md-4 card module-text">
-                                <div class="card-body">
-                                    <div class="settings-header d-flex">
-                                        <div class="settings-icon">
-                                            <i class="mdi mdi-settings"></i>
+                                <a href="">
+                                    <div class="card-body">
+                                        <div class="settings-header d-flex">
+                                            <div class="settings-icon">
+                                                <i class="mdi mdi-credit-card-multiple"></i>
+                                            </div>
+                                            <div class="settings-title">
+                                                <strong>Payment Method</strong>
+                                            </div>
                                         </div>
-                                        <div class="settings-title">
-                                            <strong>Payment Method</strong>
+                                        <div class="settings-contnt">
+                                            <p>Here is a list of all the others settings in our store</p>
                                         </div>
                                     </div>
-                                    <div class="settings-contnt">
-                                        <p>Here is a list of all the others settings in our store</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-4 card module-text">
-                                <div class="card-body">
-                                    <div class="settings-header d-flex">
-                                        <div class="settings-icon">
-                                            <i class="mdi mdi-settings"></i>
+                                <a href="">
+                                    <div class="card-body">
+                                        <div class="settings-header d-flex">
+                                            <div class="settings-icon">
+                                                <i class="mdi mdi-settings"></i>
+                                            </div>
+                                            <div class="settings-title">
+                                                <strong>Payment Method</strong>
+                                            </div>
                                         </div>
-                                        <div class="settings-title">
-                                            <strong>Payment Method</strong>
+                                        <div class="settings-contnt">
+                                            <p>Here is a list of all the others settings in our store</p>
                                         </div>
                                     </div>
-                                    <div class="settings-contnt">
-                                        <p>Here is a list of all the others settings in our store</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-4 card module-text">
-                                <div class="card-body">
-                                    <div class="settings-header d-flex">
-                                        <div class="settings-icon">
-                                            <i class="mdi mdi-settings"></i>
+                                <a href="">
+                                    <div class="card-body">
+                                        <div class="settings-header d-flex">
+                                            <div class="settings-icon">
+                                                <i class="mdi mdi-settings"></i>
+                                            </div>
+                                            <div class="settings-title">
+                                                <strong>Payment Method</strong>
+                                            </div>
                                         </div>
-                                        <div class="settings-title">
-                                            <strong>Payment Method</strong>
+                                        <div class="settings-contnt">
+                                            <p>Here is a list of all the others settings in our store</p>
                                         </div>
                                     </div>
-                                    <div class="settings-contnt">
-                                        <p>Here is a list of all the others settings in our store</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
