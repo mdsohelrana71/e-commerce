@@ -31,6 +31,13 @@
                         </div>
                         <div class="col-md-4 blog-add text-end">
                             <div class="dropdown filter-dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item text-green" href="{{ route('blogs','1') }}">Publish</a></li>
+                                  <li><a class="dropdown-item text-yellow" href="{{ route('blogs','0') }}">Unpublish</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown filter-dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Blogs Export</button>
                                 <ul class="dropdown-menu">
                                   <li><a class="dropdown-item text-green" href="{{ route('blogs.export','xlsx') }}">Excel Download</a></li>
@@ -38,14 +45,12 @@
                                   <li><a class="dropdown-item text-yellow" href="{{ route('blogs.export','pdf') }}">PDF Download</a></li>
                                 </ul>
                             </div>
-                            <div class="dropdown filter-dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter</button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item text-green" href="{{ route('blogs','1') }}">Publish</a></li>
-                                  <li><a class="dropdown-item text-yellow" href="{{ route('blogs','0') }}">Unpublish</a></li>
-                                </ul>
+                            <div class="blog-import">
+                                <a href="{{ route('blog.create') }}" class="btn btn-success"><i class="mdi mdi-plus-circle"></i>Import</a>
                             </div>
-                            <a href="{{ route('blog.create') }}" class="btn btn-success"><i class="mdi mdi-plus-circle"></i>Add</a>
+                            <div class="blog-add">
+                                <a href="{{ route('blog.create') }}" class="btn btn-success"><i class="mdi mdi-plus-circle"></i>Add</a>
+                            </div>
                         </div>
                     </div>
                 </header>
